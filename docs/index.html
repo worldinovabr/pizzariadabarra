@@ -1,1 +1,70 @@
-<!-- Copiado de client/index.html -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pizzaria da Barra — Cardápio (Cliente)</title>
+  <link rel="manifest" href="/client/manifest.json" />
+  <meta name="theme-color" content="#d84315"/>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="../assets/logo.png" alt="Pizzaria da Barra" class="logo"/>
+      <div>
+        <h1>Pizzaria da Barra</h1>
+        <p class="subtitle">Peça direto da sua mesa</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="open-cart">Carrinho (<span id="cart-count">0</span>)</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="table-banner" class="table-banner">
+      <div>
+        <strong>Mesa:</strong> <span id="table-number">—</span>
+      </div>
+      <div class="table-actions">
+        <button id="change-table">Alterar mesa</button>
+        <button id="confirm-order" class="primary" disabled>Confirmar e Enviar</button>
+      </div>
+    </section>
+
+    <section class="filters">
+      <input id="search" placeholder="Buscar..." />
+      <select id="category-filter">
+        <option value="all">Todos</option>
+      </select>
+    </section>
+
+    <section id="menu" class="menu-grid" aria-live="polite"></section>
+  </main>
+
+  <aside id="cart" class="cart" aria-hidden="true">
+    <header>
+      <h2>Seu pedido</h2>
+      <button id="close-cart">✕</button>
+    </header>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="total">Total: R$ <span id="total-price">0,00</span></div>
+      <div class="cart-opts">
+        <button id="print-order">Imprimir</button>
+        <button id="send-now" class="primary" disabled>Enviar agora</button>
+      </div>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="client-app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/client/service-worker.js').catch(()=>{});
+    }
+  </script>
+</body>
+</html>
