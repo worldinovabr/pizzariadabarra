@@ -105,13 +105,46 @@ q('#do-login').addEventListener('click', async ()=>{
   try{
     await signInWithEmailAndPassword(auth, email, password);
     modal.setAttribute('aria-hidden','true');
-  }catch(e){ alert('Erro login: '+e.message); }
+  }catch(e){
+    if(e.code === 'auth/user-not-found'){
+      alert('Usuário não encontrado. Clique em Cadastrar para criar.');
+    }else{
+      alert('Erro login: '+e.message);
+    }
+  }
+});
+
+// Cadastro de novo usuário
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+q('#do-register').addEventListener('click', async ()=>{
+  const email = q('#email').value;
+  const password = q('#password').value;
+  if(!email || !password){ alert('Preencha email e senha.'); return; }
+  try{
+    await createUserWithEmailAndPassword(auth, email, password);
+    alert('Usuário cadastrado com sucesso!');
+    modal.setAttribute('aria-hidden','true');
+  }catch(e){
+    alert('Erro ao cadastrar: '+e.message);
+  }
 });
 q('#btn-logout').addEventListener('click', ()=> signOut(auth));
 
 onAuthStateChanged(auth, user=>{
-  if(user){ q('#btn-login').style.display='none'; q('#btn-logout').style.display='inline-block'; listenRealtime(); }
-  else { q('#btn-login').style.display='inline-block'; q('#btn-logout').style.display='none'; }
+  if(user){
+    q('#btn-login').style.display='none';
+    q('#btn-logout').style.display='inline-block';
+    q('#orders').style.display = '';
+    q('#controls').style.display = '';
+    listenRealtime();
+  }else{
+    q('#btn-login').style.display='inline-block';
+    q('#btn-logout').style.display='none';
+    q('#orders').style.display = 'none';
+    q('#controls').style.display = 'none';
+    if(unsubscribe) unsubscribe();
+    ordersEl.innerHTML = '';
+  }
 });
 
 // start
