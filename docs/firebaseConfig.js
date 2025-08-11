@@ -1,4 +1,3 @@
-// firebaseConfig.js - substitua com as suas credenciais do Firebase
 export const firebaseConfig = {
   apiKey: "AZaSyAM6eaqF763bjoeXQV5kECxzed9ZqkLiLs",
   authDomain: "pizzaria-bd59b.firebaseapp.com",
