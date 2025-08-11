@@ -214,16 +214,16 @@ onAuthStateChanged(auth, user=>{
   if(user){
     q('#btn-login').style.display='none';
     q('#btn-logout').style.display='inline-block';
+    btnReport.style.display = '';
     q('#orders').style.display = '';
     q('#controls').style.display = '';
-    btnReport.style.display = '';
     listenRealtime();
   }else{
-    q('#btn-login').style.display='inline-block';
+    q('#btn-login').style.display='none';
     q('#btn-logout').style.display='none';
+    btnReport.style.display = 'none';
     q('#orders').style.display = 'none';
     q('#controls').style.display = 'none';
-    btnReport.style.display = 'none';
     reportsEl.style.display = 'none';
     if(unsubscribe) unsubscribe();
     ordersEl.innerHTML = '';
