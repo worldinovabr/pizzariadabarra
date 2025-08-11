@@ -265,15 +265,20 @@ q('#btn-logout').addEventListener('click', ()=> signOut(auth));
 
 onAuthStateChanged(auth, user=>{
   if(user){
+    // Usuário autenticado: mostra dashboard
+    q('#modal').setAttribute('aria-hidden','true');
     q('#btn-login').style.display='none';
     q('#btn-logout').style.display='inline-block';
-    btnReport.style.display = '';
-    btnSavedReports.style.display = '';
+    btnReport.style.display = 'inline-block';
+    btnSavedReports.style.display = 'inline-block';
     q('#orders').style.display = '';
     q('#controls').style.display = '';
+    reportsEl.style.display = 'none';
     listenRealtime();
   }else{
-    q('#btn-login').style.display='none';
+    // Usuário não autenticado: mostra apenas modal de login
+    q('#modal').setAttribute('aria-hidden','false');
+    q('#btn-login').style.display='inline-block';
     q('#btn-logout').style.display='none';
     btnReport.style.display = 'none';
     btnSavedReports.style.display = 'none';

@@ -39,6 +39,17 @@ button:hover, input[type="submit"]:hover, input[type="button"]:hover {
 	border-radius: 18px;
 	box-shadow: 0 4px 24px rgba(216,67,21,0.10);
 }
+
+/* Imagens automáticas nos cards */
+.order img, .report-card img {
+	width: 100%;
+	height: auto;
+	max-height: 120px;
+	object-fit: cover;
+	border-radius: 10px;
+	display: block;
+	margin: 0 auto 8px auto;
+}
 .report-card h2 {
 	color: #d84315;
 	font-size: 2rem;
