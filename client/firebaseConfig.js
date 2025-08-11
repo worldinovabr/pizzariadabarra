@@ -1,9 +1,9 @@
-// firebaseConfig.js - substitua com as suas credenciais do Firebase
 export const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_AUTH_DOMAIN",
-  projectId: "SEU_PROJECT_ID",
-  storageBucket: "SEU_BUCKET",
-  messagingSenderId: "SEU_SENDER_ID",
-  appId: "SEU_APP_ID"
+  apiKey: "AZaSyAM6eaqF763bjoeXQV5kECxzed9ZqkLiLs",
+  authDomain: "pizzaria-bd59b.firebaseapp.com",
+  projectId: "pizzaria-bd59b",
+  storageBucket: "pizzaria-bd59b.appspot.com",
+  messagingSenderId: "947433117718",
+  appId: "1:947433117718:web:15cdd8a158e063e8723d37",
+  measurementId: "G-JFYSR2PPHJ"
 };
