@@ -1,3 +1,68 @@
+/* Botões modernos */
+button, input[type="submit"], input[type="button"] {
+	padding: 10px 18px;
+	border-radius: 10px;
+	background: linear-gradient(90deg,#fff7f2,#ffe0d3);
+	border: 1px solid #ff7043;
+	color: #d84315;
+	font-weight: 600;
+	box-shadow: 0 2px 8px rgba(216,67,21,0.08);
+	cursor: pointer;
+	transition: background .18s, box-shadow .18s, transform .18s, color .18s;
+	outline: none;
+}
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+	background: linear-gradient(90deg,#ffe0d3,#fff7f2);
+	box-shadow: 0 4px 16px rgba(216,67,21,0.12);
+	transform: scale(1.04);
+	color: #ff7043;
+}
+
+/* Campo de filtro/busca */
+#filter {
+	padding: 10px 16px;
+	border-radius: 10px;
+	border: 1px solid #eee;
+	font-size: 1rem;
+	background: #f8f8f8;
+	margin-right: 12px;
+	box-shadow: 0 2px 8px rgba(216,67,21,0.06);
+	width: 320px;
+	max-width: 90vw;
+}
+
+/* Relatório mais bonito */
+.report-card {
+	margin-top: 32px;
+	padding: 24px;
+	background: #fff;
+	border-radius: 18px;
+	box-shadow: 0 4px 24px rgba(216,67,21,0.10);
+}
+.report-card h2 {
+	color: #d84315;
+	font-size: 2rem;
+	margin-bottom: 24px;
+}
+.report-card h3 {
+	color: #d84315;
+	font-size: 1.2rem;
+	margin-bottom: 12px;
+}
+.report-card table {
+	background: #fff6f0;
+	border-radius: 10px;
+	margin-bottom: 18px;
+	box-shadow: 0 2px 8px rgba(216,67,21,0.06);
+}
+.report-card th {
+	color: #d84315;
+	font-weight: 700;
+	padding: 8px 12px;
+}
+.report-card td {
+	padding: 8px 12px;
+}
 :root{--accent:#0b63a8;--card:#fff;--bg:#f6fbff}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#222}
