@@ -79,9 +79,9 @@ async function deleteOrder(id){
 }
 
 // handlers
-refreshBtn.addEventListener('click', ()=> loadOnce());
+refreshBtn.addEventListener('click', ()=> { loadOnce(); loadReports(); });
 autoCheckbox.addEventListener('change', ()=> {
-  if(autoCheckbox.checked) listenRealtime();
+  if(autoCheckbox.checked) { listenRealtime(); loadReportsRealtime(); }
   else if(unsubscribe) unsubscribe();
 });
 
@@ -94,6 +94,54 @@ filterInput.addEventListener('input', ()=> {
     it.style.display = t.includes(v) ? '' : 'none';
   });
 });
+
+// Relatórios
+const reportsEl = document.getElementById('reports');
+
+async function loadReports() {
+  const qref = query(collection(db,'pedidos'));
+  const snap = await getDocs(qref);
+  renderReports(snap.docs);
+}
+
+function loadReportsRealtime() {
+  const qref = query(collection(db,'pedidos'));
+  onSnapshot(qref, snap => {
+    renderReports(snap.docs);
+  });
+}
+
+function renderReports(docs) {
+  // Relatório por tipo de pizza
+  const pizzaStats = {};
+  // Relatório geral por dia
+  const dailyStats = {};
+  docs.forEach(d => {
+    const data = d.data();
+    if(data.status === 'cancelado') return;
+    const date = data.criadoEm && data.criadoEm.toDate ? data.criadoEm.toDate().toISOString().slice(0,10) : '-';
+    (data.itens||[]).forEach(i => {
+      // Pizza stats
+      if(!pizzaStats[i.nome]) pizzaStats[i.nome] = { qtd:0, total:0 };
+      pizzaStats[i.nome].qtd += i.qtd;
+      pizzaStats[i.nome].total += i.qtd * i.preco;
+      // Daily stats
+      if(!dailyStats[date]) dailyStats[date] = { qtd:0, total:0 };
+      dailyStats[date].qtd += i.qtd;
+      dailyStats[date].total += i.qtd * i.preco;
+    });
+  });
+  // Monta HTML
+  let html = '<h3>Relatório de Vendas</h3>';
+  html += '<div style="display:flex;gap:32px;flex-wrap:wrap">';
+  html += '<div><strong>Por tipo de pizza:</strong><ul>' + Object.entries(pizzaStats).map(([nome,stat]) => `<li>${nome}: ${stat.qtd} vendidas — R$ ${formatBRL(stat.total)}</li>`).join('') + '</ul></div>';
+  html += '<div><strong>Resumo diário:</strong><ul>' + Object.entries(dailyStats).map(([dia,stat]) => `<li>${dia}: ${stat.qtd} pizzas — R$ ${formatBRL(stat.total)}</li>`).join('') + '</ul></div>';
+  html += '</div>';
+  reportsEl.innerHTML = html;
+}
+
+// Carrega relatório ao iniciar
+loadReports();
 
 // login modal
 const modal = q('#modal');
