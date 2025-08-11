@@ -14,6 +14,7 @@ const refreshBtn = document.getElementById('refresh');
 const autoCheckbox = document.getElementById('auto');
 
 let unsubscribe = null;
+let lastSavedOrderIds = [];
 
 function q(s){return document.querySelector(s)}
 
@@ -164,6 +165,10 @@ function renderReports(docs) {
   const pizzaStats = {};
   // Relatório geral por dia
   const dailyStats = {};
+  // Coleta IDs dos pedidos atuais
+  const currentOrderIds = docs.filter(d => d.data().status !== 'cancelado').map(d => d.id);
+  // Só salva se houver pedidos novos
+  const isNewOrder = currentOrderIds.some(id => !lastSavedOrderIds.includes(id));
   docs.forEach(d => {
     const data = d.data();
     if(data.status === 'cancelado') return;
@@ -179,12 +184,15 @@ function renderReports(docs) {
       dailyStats[date].total += i.qtd * i.preco;
     });
   });
-  // Salva relatório resumido no Firestore
-  saveReportToFirestore({
-    criadoEm: new Date(),
-    pizzas: pizzaStats,
-    dias: dailyStats
-  });
+  // Salva relatório resumido no Firestore apenas se houver pedido novo
+  if(isNewOrder && currentOrderIds.length > 0) {
+    saveReportToFirestore({
+      criadoEm: new Date(),
+      pizzas: pizzaStats,
+      dias: dailyStats
+    });
+    lastSavedOrderIds = currentOrderIds;
+  }
   // Monta HTML mais bonito
   let html = `<div class="report-card">
     <h2 style="margin-bottom:16px;color:#d84315">Relatório de Vendas</h2>
