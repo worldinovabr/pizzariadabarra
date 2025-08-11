@@ -35,16 +35,17 @@ function init(){
 
 function renderCategories(){
   const sel = q('#category-filter');
-  const cats = ['all', ...new Set(menu.map(m=>m.category))];
+  const cats = ['Todos', ...new Set(menu.map(m=>m.category))];
   sel.innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join('');
   sel.addEventListener('change', ()=> filterAndRender());
+  q('#search').setAttribute('placeholder', 'Buscar no cardápio...');
   q('#search').addEventListener('input', ()=> filterAndRender());
 }
 
 function filterAndRender(){
   const sel = q('#category-filter').value;
   const search = q('#search').value.trim().toLowerCase();
-  const list = menu.filter(m=> (sel==='all'||m.category===sel) && (m.name.toLowerCase().includes(search)||m.desc.toLowerCase().includes(search)));
+  const list = menu.filter(m=> (sel==='Todos'||m.category===sel) && (m.name.toLowerCase().includes(search)||m.desc.toLowerCase().includes(search)));
   renderMenu(list);
 }
 
