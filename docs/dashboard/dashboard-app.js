@@ -97,6 +97,20 @@ filterInput.addEventListener('input', ()=> {
 
 // Relatórios
 const reportsEl = document.getElementById('reports');
+const btnReport = q('#btn-report');
+
+// Mostra/oculta relatório
+btnReport.addEventListener('click', ()=> {
+  if(reportsEl.style.display === 'none') {
+    reportsEl.style.display = '';
+    ordersEl.style.display = 'none';
+    btnReport.textContent = 'Pedidos';
+  } else {
+    reportsEl.style.display = 'none';
+    ordersEl.style.display = '';
+    btnReport.textContent = 'Relatório';
+  }
+});
 
 async function loadReports() {
   const qref = query(collection(db,'pedidos'));
@@ -131,12 +145,30 @@ function renderReports(docs) {
       dailyStats[date].total += i.qtd * i.preco;
     });
   });
-  // Monta HTML
-  let html = '<h3>Relatório de Vendas</h3>';
-  html += '<div style="display:flex;gap:32px;flex-wrap:wrap">';
-  html += '<div><strong>Por tipo de pizza:</strong><ul>' + Object.entries(pizzaStats).map(([nome,stat]) => `<li>${nome}: ${stat.qtd} vendidas — R$ ${formatBRL(stat.total)}</li>`).join('') + '</ul></div>';
-  html += '<div><strong>Resumo diário:</strong><ul>' + Object.entries(dailyStats).map(([dia,stat]) => `<li>${dia}: ${stat.qtd} pizzas — R$ ${formatBRL(stat.total)}</li>`).join('') + '</ul></div>';
-  html += '</div>';
+  // Monta HTML mais bonito
+  let html = `<div class="report-card">
+    <h2 style="margin-bottom:16px;color:#d84315">Relatório de Vendas</h2>
+    <div style="display:flex;gap:32px;flex-wrap:wrap">
+      <div style="background:#fff7f2;padding:18px 24px;border-radius:14px;box-shadow:0 2px 12px rgba(216,67,21,0.08);min-width:260px;">
+        <h3 style="color:#d84315;margin-top:0">Por tipo de pizza</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:15px;">
+          <thead><tr><th style="text-align:left">Pizza</th><th>Qtd</th><th>Total</th></tr></thead>
+          <tbody>
+            ${Object.entries(pizzaStats).map(([nome,stat]) => `<tr><td>${nome}</td><td>${stat.qtd}</td><td>R$ ${formatBRL(stat.total)}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div style="background:#fff7f2;padding:18px 24px;border-radius:14px;box-shadow:0 2px 12px rgba(216,67,21,0.08);min-width:260px;">
+        <h3 style="color:#d84315;margin-top:0">Resumo diário</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:15px;">
+          <thead><tr><th style="text-align:left">Dia</th><th>Qtd</th><th>Total</th></tr></thead>
+          <tbody>
+            ${Object.entries(dailyStats).map(([dia,stat]) => `<tr><td>${dia}</td><td>${stat.qtd}</td><td>R$ ${formatBRL(stat.total)}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
   reportsEl.innerHTML = html;
 }
 
@@ -184,12 +216,15 @@ onAuthStateChanged(auth, user=>{
     q('#btn-logout').style.display='inline-block';
     q('#orders').style.display = '';
     q('#controls').style.display = '';
+    btnReport.style.display = '';
     listenRealtime();
   }else{
     q('#btn-login').style.display='inline-block';
     q('#btn-logout').style.display='none';
     q('#orders').style.display = 'none';
     q('#controls').style.display = 'none';
+    btnReport.style.display = 'none';
+    reportsEl.style.display = 'none';
     if(unsubscribe) unsubscribe();
     ordersEl.innerHTML = '';
   }
