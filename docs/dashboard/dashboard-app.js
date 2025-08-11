@@ -125,7 +125,7 @@ const messaging = getMessaging(app);
 
 async function registerKitchenToken() {
   try {
-    const currentToken = await getToken(messaging, { vapidKey: "SUA_VAPID_KEY" });
+    const currentToken = await getToken(messaging, { vapidKey: "AIzaSyAM6eaqF763bjoeXQV5kECkzed9ZqkLiLs" });
     if (currentToken) {
       console.log("FCM Token:", currentToken);
       // Save token to Firestore
