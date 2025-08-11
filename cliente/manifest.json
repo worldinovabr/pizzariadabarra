@@ -1,9 +1,0 @@
-{
-  "name": "Pizzaria da Barra",
-  "short_name": "Pizzaria",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#b22222",
-  "icons": []
-}
