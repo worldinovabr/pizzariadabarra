@@ -98,9 +98,87 @@ filterInput.addEventListener('input', ()=> {
 // Relatórios
 const reportsEl = document.getElementById('reports');
 const btnReport = q('#btn-report');
+const btnSavedReports = document.createElement('button');
+btnSavedReports.textContent = 'Relatórios Salvos';
+btnSavedReports.style.marginRight = '12px';
+btnSavedReports.style.display = 'none';
+q('.user-area').insertBefore(btnSavedReports, btnReport);
+
+btnSavedReports.addEventListener('click', showSavedReports);
+
+async function showSavedReports() {
+  // Busca relatórios salvos
+  const qref = query(collection(db, 'relatorios'), orderBy('criadoEm', 'desc'));
+  const snap = await getDocs(qref);
+  let html = `<div class="report-card">
+    <h2 style="margin-bottom:16px;color:#d84315">Relatórios Salvos</h2>
+    <div style="display:flex;gap:32px;flex-wrap:wrap">`;
+  snap.forEach(doc => {
+    const data = doc.data();
+    html += `<div style="background:#fff7f2;padding:18px 24px;border-radius:14px;box-shadow:0 2px 12px rgba(216,67,21,0.08);min-width:260px;margin-bottom:18px;">
+      <h3 style="color:#d84315;margin-top:0">${data.criadoEm && data.criadoEm.toDate ? data.criadoEm.toDate().toLocaleString() : '-'}</h3>
+      <strong>Por tipo de pizza:</strong>
+      <table style="width:100%;border-collapse:collapse;font-size:15px;">
+        <thead><tr><th style="text-align:left">Pizza</th><th>Qtd</th><th>Total</th></tr></thead>
+        <tbody>
+          ${data.pizzas ? Object.entries(data.pizzas).map(([nome,stat]) => `<tr><td>${nome}</td><td>${stat.qtd}</td><td>R$ ${formatBRL(stat.total)}</td></tr>`).join('') : ''}
+        </tbody>
+      </table>
+      <strong>Resumo diário:</strong>
+      <table style="width:100%;border-collapse:collapse;font-size:15px;">
+        <thead><tr><th style="text-align:left">Dia</th><th>Qtd</th><th>Total</th></tr></thead>
+        <tbody>
+          ${data.dias ? Object.entries(data.dias).map(([dia,stat]) => `<tr><td>${dia}</td><td>${stat.qtd}</td><td>R$ ${formatBRL(stat.total)}</td></tr>`).join('') : ''}
+        </tbody>
+      </table>
+    </div>`;
+  });
+  html += '</div></div>';
+  reportsEl.innerHTML = html;
+  reportsEl.style.display = '';
+  ordersEl.style.display = 'none';
+  btnReport.textContent = 'Relatório';
+}
 
 // Mostra/oculta relatório
 btnReport.addEventListener('click', ()=> {
+  btnSavedReports.style.display = '';
+  showSavedReports();
+});
+
+async function showSavedReports() {
+  // Busca relatórios salvos
+  const qref = query(collection(db, 'relatorios'), orderBy('criadoEm', 'desc'));
+  const snap = await getDocs(qref);
+  let html = `<div class="report-card">
+    <h2 style="margin-bottom:16px;color:#d84315">Relatórios Salvos</h2>
+    <div style="display:flex;gap:32px;flex-wrap:wrap">`;
+  snap.forEach(doc => {
+    const data = doc.data();
+    html += `<div style="background:#fff7f2;padding:18px 24px;border-radius:14px;box-shadow:0 2px 12px rgba(216,67,21,0.08);min-width:260px;margin-bottom:18px;">
+      <h3 style="color:#d84315;margin-top:0">${data.criadoEm && data.criadoEm.toDate ? data.criadoEm.toDate().toLocaleString() : '-'}</h3>
+      <strong>Por tipo de pizza:</strong>
+      <table style="width:100%;border-collapse:collapse;font-size:15px;">
+        <thead><tr><th style="text-align:left">Pizza</th><th>Qtd</th><th>Total</th></tr></thead>
+        <tbody>
+          ${data.pizzas ? Object.entries(data.pizzas).map(([nome,stat]) => `<tr><td>${nome}</td><td>${stat.qtd}</td><td>R$ ${formatBRL(stat.total)}</td></tr>`).join('') : ''}
+        </tbody>
+      </table>
+      <strong>Resumo diário:</strong>
+      <table style="width:100%;border-collapse:collapse;font-size:15px;">
+        <thead><tr><th style="text-align:left">Dia</th><th>Qtd</th><th>Total</th></tr></thead>
+        <tbody>
+          ${data.dias ? Object.entries(data.dias).map(([dia,stat]) => `<tr><td>${dia}</td><td>${stat.qtd}</td><td>R$ ${formatBRL(stat.total)}</td></tr>`).join('') : ''}
+        </tbody>
+      </table>
+    </div>`;
+  });
+  html += '</div></div>';
+  reportsEl.innerHTML = html;
+  reportsEl.style.display = '';
+  ordersEl.style.display = 'none';
+  btnReport.textContent = 'Relatório';
+}
   if(reportsEl.style.display === 'none') {
     reportsEl.style.display = '';
     ordersEl.style.display = 'none';
@@ -145,6 +223,12 @@ function renderReports(docs) {
       dailyStats[date].total += i.qtd * i.preco;
     });
   });
+  // Salva relatório resumido no Firestore
+  saveReportToFirestore({
+    criadoEm: new Date(),
+    pizzas: pizzaStats,
+    dias: dailyStats
+  });
   // Monta HTML mais bonito
   let html = `<div class="report-card">
     <h2 style="margin-bottom:16px;color:#d84315">Relatório de Vendas</h2>
@@ -170,6 +254,20 @@ function renderReports(docs) {
     </div>
   </div>`;
   reportsEl.innerHTML = html;
+}
+
+// Função para salvar relatório resumido no Firestore
+import { addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+async function saveReportToFirestore(report) {
+  try {
+    await addDoc(collection(db, "relatorios"), {
+      ...report,
+      criadoEm: serverTimestamp()
+    });
+  } catch (e) {
+    console.warn("Erro ao salvar relatório:", e);
+  }
+}
 }
 
 // Carrega relatório ao iniciar
@@ -215,6 +313,7 @@ onAuthStateChanged(auth, user=>{
     q('#btn-login').style.display='none';
     q('#btn-logout').style.display='inline-block';
     btnReport.style.display = '';
+    btnSavedReports.style.display = '';
     q('#orders').style.display = '';
     q('#controls').style.display = '';
     listenRealtime();
@@ -222,6 +321,7 @@ onAuthStateChanged(auth, user=>{
     q('#btn-login').style.display='none';
     q('#btn-logout').style.display='none';
     btnReport.style.display = 'none';
+    btnSavedReports.style.display = 'none';
     q('#orders').style.display = 'none';
     q('#controls').style.display = 'none';
     reportsEl.style.display = 'none';
