@@ -5,16 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pizzaria da Barra — Cardápio (Cliente)</title>
   <link rel="manifest" href="/client/manifest.json" />
-  <!-- 'theme-color' funciona em Chrome/Edge, mas é ignorado por Firefox/Opera -->
   <meta name="theme-color" content="#d84315"/>
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png" />
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
     <div class="brand">
         <img src="dashboard/logo.jpg" class="logo" alt="Pizzaria da Barra" />
-  <h1 class="titulo">Pizzaria da Barra</h1>
+        <h1 style="text-align:center;">Pizzaria da Barra</h1>
         <span class="pedido-direto">Faça seu pedido direto da mesa</span>
     </div>
     <div class="actions">
@@ -38,7 +36,7 @@
 
     <section class="filters">
       <input id="search" placeholder="Buscar..." />
-  <select id="category-filter" title="Filtrar categoria">
+    <select id="category-filter" title="Filtrar categoria" aria-label="Filtrar categoria">
         <option value="all">Todos</option>
       </select>
     </section>

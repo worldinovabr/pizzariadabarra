@@ -19,11 +19,6 @@ if (!reportSection) {
   `;
   document.querySelector('main').appendChild(reportSection);
 }
-// Add filter button event right after creating it
-const btnFiltrar = document.getElementById('btn-filtrar-relatorio');
-if (btnFiltrar) {
-  btnFiltrar.onclick = () => loadSalesReport();
-}
 
 btnPedidos.addEventListener('click', () => {
   document.getElementById('orders').style.display = '';
@@ -39,42 +34,41 @@ btnRelatorio.addEventListener('click', () => {
 });
 
 async function loadSalesReport() {
-  // Get date filter values
-  const startDateEl = document.getElementById('report-date-start');
-  const endDateEl = document.getElementById('report-date-end');
-  let startDate = startDateEl && startDateEl.value ? new Date(startDateEl.value) : null;
-  let endDate = endDateEl && endDateEl.value ? new Date(endDateEl.value) : null;
-  if (endDate) endDate.setHours(23,59,59,999);
-
-  const constraints = [where('status', '==', 'entregue'), orderBy('criadoEm', 'desc')];
-  if (startDate) constraints.push(where('criadoEm', '>=', startDate));
-  if (endDate) constraints.push(where('criadoEm', '<=', endDate));
-
-  const qref = query(collection(db, 'pedidos'), ...constraints);
+  const qref = query(collection(db,'pedidos'), orderBy('criadoEm','desc'));
   const snap = await getDocs(qref);
   let total = 0;
   let count = 0;
   let mesas = new Set();
   let pedidosFinalizados = [];
   let pizzaResumo = {};
+  // Get date filter values
+  const startDateEl = document.getElementById('report-date-start');
+  const endDateEl = document.getElementById('report-date-end');
+  let startDate = startDateEl && startDateEl.value ? new Date(startDateEl.value) : null;
+  let endDate = endDateEl && endDateEl.value ? new Date(endDateEl.value) : null;
+  if (endDate) endDate.setHours(23,59,59,999);
   snap.docs.forEach(d => {
     const data = d.data();
-    const created = data.criadoEm && data.criadoEm.toDate ? data.criadoEm.toDate() : null;
-    count++;
-    mesas.add(data.mesa);
-    (data.itens||[]).forEach(i => {
-      total += (i.preco * i.qtd);
-      // Resumo por tipo de pizza
-      if (!pizzaResumo[i.nome]) pizzaResumo[i.nome] = { qtd: 0, valor: 0 };
-      pizzaResumo[i.nome].qtd += i.qtd;
-      pizzaResumo[i.nome].valor += i.preco * i.qtd;
-    });
-    pedidosFinalizados.push({
-      mesa: data.mesa,
-      criadoEm: created ? created.toLocaleString() : '-',
-      itens: data.itens || [],
-      total: (data.itens||[]).reduce((acc,i)=>acc+i.preco*i.qtd,0)
-    });
+    if(data.status === 'entregue') {
+      const created = data.criadoEm && data.criadoEm.toDate ? data.criadoEm.toDate() : null;
+      if (created && startDate && created < startDate) return;
+      if (created && endDate && created > endDate) return;
+      count++;
+      mesas.add(data.mesa);
+      (data.itens||[]).forEach(i => {
+        total += (i.preco * i.qtd);
+        // Resumo por tipo de pizza
+        if (!pizzaResumo[i.nome]) pizzaResumo[i.nome] = { qtd: 0, valor: 0 };
+        pizzaResumo[i.nome].qtd += i.qtd;
+        pizzaResumo[i.nome].valor += i.preco * i.qtd;
+      });
+      pedidosFinalizados.push({
+        mesa: data.mesa,
+        criadoEm: created ? created.toLocaleString() : '-',
+        itens: data.itens || [],
+        total: (data.itens||[]).reduce((acc,i)=>acc+i.preco*i.qtd,0)
+      });
+    }
   });
   let pizzaTable = '';
   if (Object.keys(pizzaResumo).length) {
@@ -108,6 +102,13 @@ async function loadSalesReport() {
   document.getElementById('report-content').innerHTML = html;
 }
 
+// Add filter button event
+setTimeout(() => {
+  const btnFiltrar = document.getElementById('btn-filtrar-relatorio');
+  if (btnFiltrar) {
+    btnFiltrar.onclick = () => loadSalesReport();
+  }
+}, 500);
 // dashboard-app.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getFirestore, collection, query, orderBy, onSnapshot, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
