@@ -36,7 +36,7 @@ function init(){
 function renderCategories(){
   const sel = q('#category-filter');
   const cats = ['all', ...new Set(menu.map(m=>m.category))];
-  sel.innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+    sel.innerHTML = cats.map(c=>`<option value="${c}">${c === 'all' ? 'Todos' : c}</option>`).join('');
   sel.addEventListener('change', ()=> filterAndRender());
   q('#search').addEventListener('input', ()=> filterAndRender());
 }
