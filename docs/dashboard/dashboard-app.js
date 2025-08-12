@@ -358,11 +358,6 @@ onAuthStateChanged(auth, user=>{
   if(user){
     // Usuário autenticado: mostra dashboard
     q('#modal').setAttribute('aria-hidden','true');
-    q('#btn-login').style.display='none';
-    q('#btn-logout').style.display='inline-block';
-    q('#btn-sales-report').style.display = 'inline-block';
-    q('#btn-orders').style.display = 'inline-block';
-    // Mostra apenas os botões principais
     document.querySelectorAll('.dashboard-btn').forEach(btn => {
       if (btn.id === 'btn-sales-report' || btn.id === 'btn-orders' || btn.id === 'btn-logout') {
         btn.style.display = 'inline-block';
@@ -375,14 +370,14 @@ onAuthStateChanged(auth, user=>{
     reportsEl.style.display = 'none';
     listenRealtime();
   }else{
-    // Usuário não autenticado: mostra apenas modal de login
+    // Usuário não autenticado: mostra apenas modal de login centralizado
     q('#modal').setAttribute('aria-hidden','false');
-    q('#btn-login').style.display='inline-block';
-    q('#btn-logout').style.display='none';
-    q('#btn-sales-report').style.display = 'none';
-    q('#btn-orders').style.display = 'none';
     document.querySelectorAll('.dashboard-btn').forEach(btn => {
-      btn.style.display = 'none';
+      if (btn.id === 'btn-login') {
+        btn.style.display = 'inline-block';
+      } else {
+        btn.style.display = 'none';
+      }
     });
     q('#orders').style.display = 'none';
     q('#controls').style.display = 'none';
