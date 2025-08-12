@@ -14,6 +14,7 @@ const refreshBtn = document.getElementById('refresh');
 const autoCheckbox = document.getElementById('auto');
 
 let unsubscribe = null;
+let lastSavedReportData = null;
 let lastSavedOrderIds = [];
 
 function q(s){return document.querySelector(s)}
@@ -233,14 +234,16 @@ function renderReports(docs) {
       dailyStats[date].total += i.qtd * i.preco;
     });
   });
-  // Salva relatório resumido no Firestore apenas se houver pedido novo
-  if(isNewOrder && currentOrderIds.length > 0) {
+  // Salva relatório resumido no Firestore apenas se houver pedido novo e dados diferentes do último salvo
+  const currentReportData = JSON.stringify({pizzas: pizzaStats, dias: dailyStats});
+  if(isNewOrder && currentOrderIds.length > 0 && currentReportData !== lastSavedReportData) {
     saveReportToFirestore({
       criadoEm: new Date(),
       pizzas: pizzaStats,
       dias: dailyStats
     });
     lastSavedOrderIds = currentOrderIds;
+    lastSavedReportData = currentReportData;
   }
   // Preenche filtro de pizza
   fillPizzaTypeFilter(pizzaStats);
