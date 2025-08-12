@@ -1,6 +1,6 @@
 // client-app.js - Pizzaria da Barra (cliente)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, serverTimestamp, doc, runTransaction } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
 // firebase config placeholder - substitua
 import { firebaseConfig } from "./firebaseConfig.js";
@@ -164,6 +164,19 @@ function confirmAndSend(){
   showToast('Revise o pedido e clique em Enviar agora');
 }
 
+// Gera número sequencial do pedido em uma transação
+async function getNextOrderNumber(){
+  const counterRef = doc(db, 'counters', 'pedidos');
+  const next = await runTransaction(db, async (tx) => {
+    const snap = await tx.get(counterRef);
+    const current = snap.exists() ? (snap.data().seq || 0) : 0;
+    const newSeq = current + 1;
+    tx.set(counterRef, { seq: newSeq }, { merge: true });
+    return newSeq;
+  });
+  return next;
+}
+
 async function sendNow(){
   if(!state.table || state.cart.length===0) return;
   const pedido = {
@@ -175,11 +188,12 @@ async function sendNow(){
   };
   try{
     if(navigator.onLine){
-      await addDoc(collection(db,'pedidos'), pedido);
+      const numeroRegistro = await getNextOrderNumber();
+      await addDoc(collection(db,'pedidos'), { ...pedido, numeroRegistro });
       state.cart = [];
       saveState();
       updateCartUI();
-      showToast('Pedido enviado — obrigado!');
+      showToast(`Pedido #${numeroRegistro} enviado — obrigado!`);
     }else{
       queueOrder(pedido);
       state.cart = [];
@@ -217,7 +231,8 @@ async function sendQueued(){
   try{
     for(const p of arr){
       // replace serverTimestamp with Date.now() fallback
-      await addDoc(collection(db,'pedidos'), { ...p, criadoEm: serverTimestamp() });
+      const numeroRegistro = await getNextOrderNumber();
+      await addDoc(collection(db,'pedidos'), { ...p, numeroRegistro, criadoEm: serverTimestamp() });
     }
     localStorage.removeItem(key);
     showToast('Pedidos enfileirados enviados');
