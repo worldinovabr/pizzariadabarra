@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pizzaria da Barra — Cardápio (Cliente)</title>
-  <link rel="manifest" href="/client/manifest.json" />
+  <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#d84315"/>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -64,7 +64,7 @@
   <script type="module" src="client-app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/client/service-worker.js').catch(()=>{});
+      navigator.serviceWorker.register('service-worker.js').catch(()=>{});
     }
   </script>
 </body>

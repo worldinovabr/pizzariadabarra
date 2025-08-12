@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pizzaria da Barra — Dashboard (Recepção)</title>
-  <link rel="manifest" href="/dashboard/manifest.json" />
+  <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0b63a8"/>
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/logo.png" />
   <link rel="stylesheet" href="styles.css">
@@ -57,7 +57,7 @@
   <script type="module" src="dashboard-app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/dashboard/service-worker.js').catch(()=>{});
+      navigator.serviceWorker.register('service-worker.js').catch(()=>{});
     }
   </script>
 </body>
