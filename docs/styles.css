@@ -1,3 +1,7 @@
+/* Centraliza o título principal */
+.titulo {
+  text-align: center;
+}
 .client-bg {
   min-height: 100vh;
   background: linear-gradient(120deg,#fff7f2 0%,#ffe0d3 100%);

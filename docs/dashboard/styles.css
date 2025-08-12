@@ -1,3 +1,7 @@
+/* Esconde elementos visualmente */
+.hidden {
+	display: none !important;
+}
 @media (min-width: 900px) {
 	.topbar {
 		flex-direction: row;
