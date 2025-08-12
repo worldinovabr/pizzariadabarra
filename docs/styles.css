@@ -638,31 +638,49 @@ body {
 /* Footer with total and actions always visible */
 .cart-footer {
 	border-top: 1px solid #f3f3f3;
-	padding: 14px 18px;
+	padding: 10px 14px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 12px;
+	gap: 10px;
 	position: sticky;
 	bottom: 0;
 	background: var(--card);
 }
 .cart-footer .total {
 	font-weight: 800;
-	font-size: 1.06rem;
+	font-size: 0.98rem;
+	line-height: 1.2;
 }
 .cart-footer .cart-opts {
 	display: flex;
-	gap: 12px;
+	gap: 10px;
 }
 
 /* Keep primary action prominent; inherits global button visuals */
-.cart-footer .cart-opts button.primary {
-	min-width: 160px;
+.cart-footer .cart-opts .button,
+.cart-footer .cart-opts button,
+.cart-footer .cart-opts input[type="submit"],
+.cart-footer .cart-opts input[type="button"] {
+	min-width: 120px;
+	padding: 10px 0;
+	font-size: 1rem;
+	border-radius: 12px;
 }
+.cart-footer .cart-opts button.primary { min-width: 130px; }
 
 /* Better small-screen spacing inside cart */
 @media (max-width: 600px) {
 	.cart-item strong { max-width: 150px; }
-	.cart-footer { padding: 12px; }
+	.cart-footer { padding: 10px 12px; }
+	.cart-footer .cart-opts .button,
+	.cart-footer .cart-opts button,
+	.cart-footer .cart-opts input[type="submit"],
+	.cart-footer .cart-opts input[type="button"] {
+		min-width: 110px;
+		padding: 9px 0;
+		font-size: 0.96rem;
+		border-radius: 10px;
+	}
+	.cart-footer .total { font-size: 0.94rem; }
 }
