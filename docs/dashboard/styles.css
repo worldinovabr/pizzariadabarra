@@ -115,12 +115,12 @@ button:hover, input[type="submit"]:hover, input[type="button"]:hover {
 /* Imagens automáticas nos cards */
 .order img, .report-card img {
 	width: 100%;
-	height: auto;
-	max-height: 120px;
+	height: 200px;
 	object-fit: cover;
-	border-radius: 10px;
+	border-radius: 18px;
 	display: block;
-	margin: 0 auto 8px auto;
+	margin: 0 auto 18px auto;
+	box-shadow: 0 4px 18px rgba(216,67,21,0.10);
 }
 .report-card h2 {
 	color: #d84315;
@@ -155,8 +155,31 @@ body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#222}
 main{padding:16px;max-width:1200px;margin:0 auto}
 .controls{display:flex;gap:8px;align-items:center;margin-bottom:12px}
 .controls input{flex:1;padding:10px;border-radius:8px;border:1px solid #e6f0fb}
-.orders-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
-.order{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.orders-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+  gap:32px;
+  justify-content:center;
+  align-items:stretch;
+  width:100%;
+  max-width:1400px;
+  margin:32px auto 0 auto;
+}
+.order{
+  background:var(--card);
+  padding:32px 20px 20px 20px;
+  border-radius:18px;
+  box-shadow:0 8px 32px rgba(216,67,21,0.10);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:340px;
+  transition:box-shadow 0.2s, transform 0.2s;
+}
+.order:hover{
+  box-shadow:0 16px 48px rgba(216,67,21,0.16);
+  transform:scale(1.03);
+}
 .order h4{margin:0}
 .order .meta{font-size:13px;color:#666}
 .order .items{margin-top:8px}
