@@ -1,0 +1,1 @@
+Removed gh-pages.yml to restore default GitHub Pages flow using Docs branch/folder.
