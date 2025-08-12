@@ -362,6 +362,14 @@ onAuthStateChanged(auth, user=>{
     q('#btn-logout').style.display='inline-block';
     q('#btn-sales-report').style.display = 'inline-block';
     q('#btn-orders').style.display = 'inline-block';
+    // Mostra apenas os botões principais
+    document.querySelectorAll('.button').forEach(btn => {
+      if (btn.id === 'btn-sales-report' || btn.id === 'btn-orders' || btn.id === 'btn-logout') {
+        btn.style.display = 'inline-block';
+      } else {
+        btn.style.display = 'none';
+      }
+    });
     q('#orders').style.display = '';
     q('#controls').style.display = '';
     reportsEl.style.display = 'none';
@@ -373,6 +381,9 @@ onAuthStateChanged(auth, user=>{
     q('#btn-logout').style.display='none';
     q('#btn-sales-report').style.display = 'none';
     q('#btn-orders').style.display = 'none';
+    document.querySelectorAll('.button').forEach(btn => {
+      btn.style.display = 'none';
+    });
     q('#orders').style.display = 'none';
     q('#controls').style.display = 'none';
     reportsEl.style.display = 'none';

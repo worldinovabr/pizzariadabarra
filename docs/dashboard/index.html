@@ -44,14 +44,15 @@
 
   <!-- modal login -->
   <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <h3>Login - Recepção</h3>
-      <input id="email" placeholder="email" />
-      <input id="password" placeholder="senha" type="password" />
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button id="do-login" class="primary">Entrar</button>
-        <button id="do-register">Cadastrar</button>
-        <button id="close-modal">Cancelar</button>
+    <div class="modal-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;padding:32px 24px;box-shadow:0 8px 32px rgba(0,0,0,0.18);border-radius:18px;background:#fff;max-width:340px;margin:0 auto;">
+      <img src="../assets/logo.png" alt="Logo" style="width:72px;height:72px;margin-bottom:18px;" />
+      <h2 style="color:#d84315;margin-bottom:18px;text-align:center">Login do Administrador</h2>
+      <input id="email" placeholder="Email" style="width:100%;padding:12px 14px;margin-bottom:12px;border-radius:10px;border:1px solid #eee;font-size:1.08rem;" />
+      <input id="password" placeholder="Senha" type="password" style="width:100%;padding:12px 14px;margin-bottom:18px;border-radius:10px;border:1px solid #eee;font-size:1.08rem;" />
+      <div style="display:flex;gap:10px;margin-top:8px;width:100%;justify-content:center;">
+        <button id="do-login" class="primary" style="padding:10px 24px;border-radius:10px;font-size:1rem;">Entrar</button>
+        <button id="do-register" style="padding:10px 24px;border-radius:10px;font-size:1rem;">Cadastrar</button>
+        <button id="close-modal" style="padding:10px 24px;border-radius:10px;font-size:1rem;">Cancelar</button>
       </div>
     </div>
   </div>
