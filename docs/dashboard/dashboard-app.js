@@ -97,6 +97,55 @@ filterInput.addEventListener('input', ()=> {
 });
 
 // Relatórios
+// Filtros de relatório
+const reportFiltersEl = q('#report-filters');
+const pizzaTypeFilterEl = q('#pizza-type-filter');
+const dateFilterEl = q('#date-filter');
+const applyReportFilterBtn = q('#apply-report-filter');
+
+// Preenche tipos de pizza no filtro
+function fillPizzaTypeFilter(pizzaStats) {
+  const pizzas = Object.keys(pizzaStats);
+  pizzaTypeFilterEl.innerHTML = '<option value="">Todas as pizzas</option>' + pizzas.map(p => `<option value="${p}">${p}</option>`).join('');
+}
+
+let lastReportData = null;
+
+applyReportFilterBtn.addEventListener('click', () => {
+  if (!lastReportData) return;
+  const pizzaType = pizzaTypeFilterEl.value;
+  const date = dateFilterEl.value;
+  renderFilteredReport(lastReportData, pizzaType, date);
+});
+
+function renderFilteredReport(reportData, pizzaType, date) {
+  let html = `<div class="report-card">
+    <h2 style="margin-bottom:16px;color:#d84315">Relatório Filtrado</h2>
+    <div style="display:flex;gap:32px;flex-wrap:wrap">`;
+  // Pizza
+  html += `<div style="background:#fff7f2;padding:18px 24px;border-radius:14px;box-shadow:0 2px 12px rgba(216,67,21,0.08);min-width:260px;">
+    <h3 style="color:#d84315;margin-top:0">Por tipo de pizza</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:15px;">
+      <thead><tr><th style="text-align:left">Pizza</th><th>Qtd</th><th>Total</th></tr></thead>
+      <tbody>`;
+  Object.entries(reportData.pizzas).forEach(([nome,stat]) => {
+    if (pizzaType && nome !== pizzaType) return;
+    html += `<tr><td>${nome}</td><td>${stat.qtd}</td><td>R$ ${formatBRL(stat.total)}</td></tr>`;
+  });
+  html += `</tbody></table></div>`;
+  // Dia
+  html += `<div style="background:#fff7f2;padding:18px 24px;border-radius:14px;box-shadow:0 2px 12px rgba(216,67,21,0.08);min-width:260px;">
+    <h3 style="color:#d84315;margin-top:0">Resumo diário</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:15px;">
+      <thead><tr><th style="text-align:left">Dia</th><th>Qtd</th><th>Total</th></tr></thead>
+      <tbody>`;
+  Object.entries(reportData.dias).forEach(([dia,stat]) => {
+    if (date && dia !== date) return;
+    html += `<tr><td>${dia}</td><td>${stat.qtd}</td><td>R$ ${formatBRL(stat.total)}</td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  reportsEl.innerHTML = html;
+}
 const reportsEl = document.getElementById('reports');
 const btnReport = q('#btn-report');
 const btnSavedReports = document.createElement('button');
@@ -193,7 +242,13 @@ function renderReports(docs) {
     });
     lastSavedOrderIds = currentOrderIds;
   }
-  // Monta HTML mais bonito
+  // Preenche filtro de pizza
+  fillPizzaTypeFilter(pizzaStats);
+  // Salva dados para filtro
+  lastReportData = { pizzas: pizzaStats, dias: dailyStats };
+  // Mostra filtros
+  reportFiltersEl.style.display = '';
+  // Monta HTML padrão
   let html = `<div class="report-card">
     <h2 style="margin-bottom:16px;color:#d84315">Relatório de Vendas</h2>
     <div style="display:flex;gap:32px;flex-wrap:wrap">

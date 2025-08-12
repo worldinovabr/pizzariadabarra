@@ -28,6 +28,15 @@
       <label><input type="checkbox" id="auto"> Atualização em tempo real</label>
     </section>
 
+    <!-- Filtros para relatórios -->
+    <section id="report-filters" style="display:none; margin-bottom:18px; gap:16px; align-items:center;">
+      <select id="pizza-type-filter" style="padding:8px 12px; border-radius:8px;">
+        <option value="">Todas as pizzas</option>
+      </select>
+      <input id="date-filter" type="date" style="padding:8px 12px; border-radius:8px;" />
+      <button id="apply-report-filter" style="padding:8px 18px; border-radius:8px; background:#d84315; color:#fff; border:none;">Filtrar</button>
+    </section>
+
     <section id="reports" class="reports-list" style="display:none;margin-bottom:32px"></section>
     <section id="orders" class="orders-list"></section>
   </main>
