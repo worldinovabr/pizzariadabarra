@@ -9,10 +9,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const menu = [
-  {id:1,name:"Margherita",desc:"Molho, mussarela e manjericão",price:29.9,category:"Tradicionais",img:"docs/dashboard/pizza1.png"},
-  {id:2,name:"Calabresa",desc:"Calabresa, cebola, azeitonas",price:34.9,category:"Tradicionais",img:"docs/dashboard/pizza2.png"},
-  {id:3,name:"Quatro Queijos",desc:"Mussarela, provolone, gorgonzola, parmesão",price:39.9,category:"Especiais",img:"docs/dashboard/pizza3.png"},
-  {id:4,name:"Pepperoni",desc:"Pepperoni picante",price:41.9,category:"Picantes",img:"docs/dashboard/pizza4.png"}
+  {id:1,name:"Margherita",desc:"Molho, mussarela e manjericão",price:29.9,category:"Tradicionais",img:"dashboard/pizza1.png"},
+  {id:2,name:"Calabresa",desc:"Calabresa, cebola, azeitonas",price:34.9,category:"Tradicionais",img:"dashboard/pizza2.png"},
+  {id:3,name:"Quatro Queijos",desc:"Mussarela, provolone, gorgonzola, parmesão",price:39.9,category:"Especiais",img:"dashboard/pizza3.png"},
+  {id:4,name:"Pepperoni",desc:"Pepperoni picante",price:41.9,category:"Picantes",img:"dashboard/pizza4.png"}
 ];
 
 const state = { table:null, cart:[], menu };
@@ -36,7 +36,7 @@ function init(){
 function renderCategories(){
   const sel = q('#category-filter');
   const cats = ['all', ...new Set(menu.map(m=>m.category))];
-  sel.innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+    sel.innerHTML = cats.map(c=>`<option value="${c}">${c === 'all' ? 'Todos' : c}</option>`).join('');
   sel.addEventListener('change', ()=> filterAndRender());
   q('#search').addEventListener('input', ()=> filterAndRender());
 }
@@ -44,7 +44,7 @@ function renderCategories(){
 function filterAndRender(){
   const sel = q('#category-filter').value;
   const search = q('#search').value.trim().toLowerCase();
-  const list = menu.filter(m=> (sel==='all'||m.category===sel) && (m.name.toLowerCase().includes(search)||m.desc.toLowerCase().includes(search)));
+  const list = menu.filter(m=> (sel==='Todos'||m.category===sel) && (m.name.toLowerCase().includes(search)||m.desc.toLowerCase().includes(search)));
   renderMenu(list);
 }
 
