@@ -81,7 +81,16 @@ async function deleteOrder(id){
 }
 
 // handlers
-refreshBtn.addEventListener('click', ()=> { loadOnce(); loadReports(); });
+refreshBtn.addEventListener('click', ()=> {
+  if (!auth.currentUser) {
+    ordersEl.innerHTML = '';
+    reportsEl.innerHTML = '';
+    q('#modal').setAttribute('aria-hidden','false');
+    return;
+  }
+  loadOnce();
+  loadReports();
+});
 autoCheckbox.addEventListener('change', ()=> {
   if(autoCheckbox.checked) { listenRealtime(); loadReportsRealtime(); }
   else if(unsubscribe) unsubscribe();
