@@ -85,12 +85,13 @@
 }
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
   width: 100%;
   max-width: 1200px;
   margin: 32px auto 0 auto;
   justify-content: center;
+  align-items: stretch;
 }
 .card {
   background: #fff;
@@ -189,8 +190,8 @@
 }
 @media (min-width: 900px) {
   .menu-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 48px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
     max-width: 1200px;
   }
   .card {
