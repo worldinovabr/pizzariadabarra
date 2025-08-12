@@ -552,6 +552,22 @@ body {
 	transition: all .2s;
 	z-index: 200;
 }
+
+/* ==== Print receipt styles ==== */
+.receipt { display: none; }
+.receipt .receipt-wrap { max-width: 320px; margin: 0 auto; font-family: monospace; }
+.receipt h2 { text-align: center; margin: 0 0 6px 0; }
+.receipt .r-meta { font-size: 12px; margin-bottom: 6px; }
+.receipt .r-items { font-size: 12px; }
+.receipt .r-items div { display: flex; justify-content: space-between; }
+.receipt .r-total { margin-top: 6px; font-weight: 700; }
+.receipt .r-obs { text-align: center; font-size: 12px; }
+
+@media print {
+	body { background: #fff; }
+	.topbar, main, .cart, #toast { display: none !important; }
+	.receipt { display: block; padding: 10px; }
+}
 /* Destaque da mesa no banner */
 .table-banner strong {
 	font-size: 1.22rem;

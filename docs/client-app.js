@@ -136,7 +136,7 @@ function setupHandlers(){
   q('#close-cart').addEventListener('click', ()=> q('#cart').setAttribute('aria-hidden','true'));
   q('#change-table').addEventListener('click', askTable);
   q('#confirm-order').addEventListener('click', confirmAndSend);
-  q('#print-order').addEventListener('click', ()=> window.print());
+  q('#print-order').addEventListener('click', ()=> { prepareReceipt({ previewOnly:true }); window.print(); });
   q('#send-now').addEventListener('click', sendNow);
 }
 
@@ -189,11 +189,12 @@ async function sendNow(){
   try{
     if(navigator.onLine){
       const numeroRegistro = await getNextOrderNumber();
-      await addDoc(collection(db,'pedidos'), { ...pedido, numeroRegistro });
+  await addDoc(collection(db,'pedidos'), { ...pedido, numeroRegistro });
       state.cart = [];
       saveState();
       updateCartUI();
   showToast(`pedido= ${numeroRegistro} enviado — obrigado!`);
+  prepareReceipt({ numeroRegistro });
     }else{
       queueOrder(pedido);
       state.cart = [];
@@ -239,6 +240,19 @@ async function sendQueued(){
   }catch(e){
     console.error('Erro ao enviar enfileirados', e);
   }
+}
+
+function prepareReceipt({ numeroRegistro, previewOnly=false }={}){
+  const rs = q('#receipt');
+  if(!rs) return;
+  const num = numeroRegistro ? `pedido= ${numeroRegistro}` : '';
+  const mesa = state.table ? `Mesa: ${state.table}` : '';
+  const when = new Date().toLocaleString();
+  q('#r-meta').innerHTML = [num, mesa, `Criado: ${when}`].filter(Boolean).join(' | ');
+  const itemsHtml = state.cart.map(i=>`<div><span>${i.qtd}× ${i.name}</span><span>R$ ${formatBRL(i.price*i.qty)}</span></div>`).join('');
+  q('#r-items').innerHTML = itemsHtml || '<div>Nenhum item.</div>';
+  const total = state.cart.reduce((s,i)=>s+i.qty*i.price,0);
+  q('#r-total').textContent = `Total: R$ ${formatBRL(total)}`;
 }
 
 init();

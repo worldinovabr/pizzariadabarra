@@ -221,8 +221,9 @@ filterInput.addEventListener('input', ()=> {
   // simple client-side filter
   const items = Array.from(ordersEl.querySelectorAll('.order'));
   items.forEach(it=>{
-    const t = it.textContent.toLowerCase();
-    it.style.display = t.includes(v) ? '' : 'none';
+  const t = it.textContent.toLowerCase();
+  // also check data attributes for numeroRegistro if present in DOM
+  it.style.display = t.includes(v) ? '' : 'none';
   });
 });
 

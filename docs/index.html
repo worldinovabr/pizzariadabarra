@@ -59,6 +59,19 @@
     </div>
   </aside>
 
+  <!-- Recibo imprimível (mostra só ao imprimir) -->
+  <section id="receipt" class="receipt" aria-hidden="true">
+    <div class="receipt-wrap">
+      <h2>Pizzaria da Barra</h2>
+      <div id="r-meta" class="r-meta"></div>
+      <hr>
+      <div id="r-items" class="r-items"></div>
+      <hr>
+      <div id="r-total" class="r-total"></div>
+      <p class="r-obs">Obrigado pela preferência!</p>
+    </div>
+  </section>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script type="module" src="client-app.js"></script>
