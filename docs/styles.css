@@ -280,13 +280,13 @@ body {
 	@media (max-width:900px) {
 		.main { padding: 8px; max-width: 100vw; }
 		.menu-grid { grid-template-columns: 1fr; gap: 18px; width: 100vw; }
-		.logo { width: 70px; height: 70px; }
+		.logo { width: 100px; height: 100px; }
 		.card { padding: 18px; max-width: 98vw; }
 		.card img { height: 120px; max-width: 160px; }
 		.cart { width: 100vw; right: 0; bottom: 0; max-width: 100vw; height: 90vh; border-radius: 16px 16px 0 0; }
 	}
 	@media (max-width:600px) {
-		.logo { width: 48px; height: 48px; }
+		.logo { width: 100px; height: 100px; }
 		.card img { height: 90px; max-width: 90px; border-radius: 10px; }
 		.cart { width: 94%; }
 	}
