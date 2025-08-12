@@ -363,7 +363,7 @@ onAuthStateChanged(auth, user=>{
     q('#btn-sales-report').style.display = 'inline-block';
     q('#btn-orders').style.display = 'inline-block';
     // Mostra apenas os botões principais
-    document.querySelectorAll('.button').forEach(btn => {
+    document.querySelectorAll('.dashboard-btn').forEach(btn => {
       if (btn.id === 'btn-sales-report' || btn.id === 'btn-orders' || btn.id === 'btn-logout') {
         btn.style.display = 'inline-block';
       } else {
@@ -381,7 +381,7 @@ onAuthStateChanged(auth, user=>{
     q('#btn-logout').style.display='none';
     q('#btn-sales-report').style.display = 'none';
     q('#btn-orders').style.display = 'none';
-    document.querySelectorAll('.button').forEach(btn => {
+    document.querySelectorAll('.dashboard-btn').forEach(btn => {
       btn.style.display = 'none';
     });
     q('#orders').style.display = 'none';
