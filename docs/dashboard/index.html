@@ -9,50 +9,36 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="dashboard-topbar">
-    <img src="../assets/logo.png" class="dashboard-logo" alt="Pizzaria da Barra"/>
-    <h1 class="dashboard-title">Dashboard Admin</h1>
-    <div class="dashboard-user-area" id="user-area">
-      <button id="btn-orders" class="dashboard-btn" style="display:none;">Pedidos</button>
-      <button id="btn-sales-report" class="dashboard-btn" style="display:none;">Relatório de Vendas</button>
-      <button id="btn-login" class="dashboard-btn">Entrar</button>
-      <button id="btn-logout" class="dashboard-btn" style="display:none;">Sair</button>
+  <header class="topbar">
+    <div class="brand">
+      <img src="../assets/logo.jpg" class="logo" alt="Pizzaria da Barra"/>
+      <h1>Dashboard - Recepção</h1>
+    </div>
+    <div class="user-area" id="user-area">
+      <button id="btn-login">Entrar</button>
+      <button id="btn-logout" style="display:none">Sair</button>
     </div>
   </header>
 
   <main>
-    <section class="dashboard-controls" id="controls" style="display:none;">
-      <div class="dashboard-controls-row">
-        <input id="filter" class="dashboard-filter" placeholder="Filtrar por mesa ou status" />
-        <button id="refresh" class="dashboard-refresh">Atualizar</button>
-      </div>
-      <label class="dashboard-checkbox-label"><input type="checkbox" id="auto" style="margin-right:8px;"> Atualização em tempo real</label>
+    <section class="controls">
+      <input id="filter" placeholder="Filtrar por mesa ou status" />
+      <button id="refresh">Atualizar</button>
+      <label><input type="checkbox" id="auto"> Atualização em tempo real</label>
     </section>
 
-    <!-- Filtros para relatórios -->
-    <section id="report-filters" class="dashboard-report-filters" style="display:none;">
-      <select id="pizza-type-filter" class="dashboard-report-select">
-        <option value="">Todas as pizzas</option>
-      </select>
-      <input id="date-filter" type="date" class="dashboard-report-date" />
-      <button id="apply-report-filter" class="dashboard-report-apply">Filtrar</button>
-    </section>
-
-  <section id="reports" class="dashboard-reports-list" style="display:none;"></section>
-  <section id="orders" class="dashboard-orders-list"></section>
+    <section id="orders" class="orders-list"></section>
   </main>
 
   <!-- modal login -->
   <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;padding:32px 24px;box-shadow:0 8px 32px rgba(0,0,0,0.18);border-radius:18px;background:#fff;max-width:340px;margin:0 auto;">
-      <img src="../assets/logo.png" alt="Logo" style="width:72px;height:72px;margin-bottom:18px;" />
-      <h2 style="color:#d84315;margin-bottom:18px;text-align:center">Login do Administrador</h2>
-      <input id="email" placeholder="Email" style="width:100%;padding:12px 14px;margin-bottom:12px;border-radius:10px;border:1px solid #eee;font-size:1.08rem;" />
-      <input id="password" placeholder="Senha" type="password" style="width:100%;padding:12px 14px;margin-bottom:18px;border-radius:10px;border:1px solid #eee;font-size:1.08rem;" />
-      <div style="display:flex;gap:10px;margin-top:8px;width:100%;justify-content:center;">
-        <button id="do-login" class="primary" style="padding:10px 24px;border-radius:10px;font-size:1rem;">Entrar</button>
-        <button id="do-register" style="padding:10px 24px;border-radius:10px;font-size:1rem;">Cadastrar</button>
-        <button id="close-modal" style="padding:10px 24px;border-radius:10px;font-size:1rem;">Cancelar</button>
+    <div class="modal-content">
+      <h3>Login - Recepção</h3>
+      <input id="email" placeholder="email" />
+      <input id="password" placeholder="senha" type="password" />
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button id="do-login" class="primary">Entrar</button>
+        <button id="close-modal">Cancelar</button>
       </div>
     </div>
   </div>
