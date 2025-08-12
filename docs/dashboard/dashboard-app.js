@@ -24,6 +24,8 @@ btnPedidos.addEventListener('click', () => {
   document.getElementById('orders').style.display = '';
   document.querySelector('.controls').style.display = '';
   reportSection.style.display = 'none';
+  btnPedidos.classList.add('active');
+  btnRelatorio.classList.remove('active');
 });
 
 btnRelatorio.addEventListener('click', () => {
@@ -31,6 +33,8 @@ btnRelatorio.addEventListener('click', () => {
   document.querySelector('.controls').style.display = 'none';
   reportSection.style.display = '';
   loadSalesReport();
+  btnRelatorio.classList.add('active');
+  btnPedidos.classList.remove('active');
 });
 
 async function loadSalesReport() {
@@ -111,7 +115,7 @@ setTimeout(() => {
 }, 500);
 // dashboard-app.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getFirestore, collection, query, orderBy, onSnapshot, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { getFirestore, collection, query, orderBy, onSnapshot, getDocs, updateDoc, doc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
 import { firebaseConfig } from "./firebaseConfig.js";
@@ -256,15 +260,15 @@ q('#btn-logout').addEventListener('click', ()=> {
 
 onAuthStateChanged(auth, user=>{
   if(user){
-    q('#btn-login').style.display='none';
-    q('#btn-logout').style.display='inline-block';
+  q('#btn-login').classList.add('hidden');
+  q('#btn-logout').classList.remove('hidden');
     q('#modal').setAttribute('aria-hidden','true');
     document.querySelector('.controls').style.display = '';
     document.querySelector('#orders').style.display = '';
     listenRealtime();
   }else{
-    q('#btn-login').style.display='inline-block';
-    q('#btn-logout').style.display='none';
+  q('#btn-login').classList.remove('hidden');
+  q('#btn-logout').classList.add('hidden');
     q('#modal').setAttribute('aria-hidden','false');
     document.querySelector('.controls').style.display = 'none';
     document.querySelector('#orders').style.display = 'none';
@@ -276,6 +280,7 @@ onAuthStateChanged(auth, user=>{
 
 // start
 loadOnce();
+btnPedidos.classList.add('active');
 
 
 // ======== FCM Token Registration ========

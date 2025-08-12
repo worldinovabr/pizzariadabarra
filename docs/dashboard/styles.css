@@ -8,7 +8,7 @@
 			justify-content: center;
 			align-items: center;
 			padding: 14px 0 8px 0;
-			border-radius: 0 0 32px 32px;
+			border-radius: 0 0 36px 36px;
 			gap: 0;
 	}
 	.brand {
@@ -27,15 +27,15 @@
 			gap: 10px;
 			align-items: center;
 	}
-	.dashboard-btn {
-			padding: 8px 18px;
-			font-size: 1rem;
-			border-radius: 12px;
+	.dashboard-nav {
+			margin-left: 0;
+			gap: 22px;
+			align-items: center;
 	}
-	main {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 32px 0;
+	.dashboard-btn {
+			padding: 14px 34px;
+			font-size: 1.08rem;
+			border-radius: 22px;
 	}
 	#orders, #sales-report {
 		margin-top: 32px;
@@ -45,15 +45,15 @@
 }
 .dashboard-nav {
 	display: flex;
-	gap: 18px;
-	margin: 0 0 8px 0;
+	gap: 22px;
+	margin: 8px 0 6px 0;
 	justify-content: center;
 }
 .dashboard-btn {
-	padding: 12px 28px;
+	padding: 14px 34px;
 	font-size: 1.08rem;
-	border-radius: 14px;
-	background: linear-gradient(90deg,#fff7f2,#ffe0d3);
+	border-radius: 22px;
+	background: linear-gradient(90deg,#ffe8df,#ffd6c9);
 	color: #d84315;
 	font-weight: 700;
 	border: 1.5px solid #ff7043;
@@ -67,8 +67,12 @@
 	box-shadow: 0 4px 16px rgba(216,67,21,0.14);
 }
 .dashboard-btn:hover {
-	background: linear-gradient(90deg,#ffe0d3,#fff7f2);
+	background: linear-gradient(90deg,#fff0e9,#ffe0d3);
 	color: #ff7043;
+}
+.dashboard-btn:focus-visible{
+	outline: 3px solid rgba(255,255,255,0.6);
+	outline-offset: 2px;
 }
 /* Botões modernos */
 button, input[type="submit"], input[type="button"] {
@@ -149,9 +153,56 @@ button:hover, input[type="submit"]:hover, input[type="button"]:hover {
 :root{--accent:#0b63a8;--card:#fff;--bg:#f6fbff}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#222}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px;background:linear-gradient(90deg,var(--accent),#1985c6);color:white}
-.brand{display:flex;gap:12px;align-items:center}
-.logo{width:56px;height:56px;border-radius:10px}
+.topbar{
+	position:relative;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+	gap:10px;
+	padding:26px 16px 18px 16px;
+	background:linear-gradient(90deg,var(--accent),#1985c6);
+	color:white;
+	border-radius:0 0 36px 36px;
+	box-shadow:0 8px 30px rgba(11,99,168,0.22);
+}
+.brand{
+	display:flex;
+	align-items:center;
+	gap:14px;
+	margin-bottom:8px;
+}
+.brand h1{
+	margin:0;
+	font-size:2.1rem;
+	font-weight:800;
+	letter-spacing:.5px;
+	text-shadow:0 2px 6px rgba(0,0,0,0.18);
+}
+.logo{width:72px;height:72px;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.18)}
+.user-area{
+	position:absolute;
+	right:16px;
+	top:16px;
+	display:flex;
+	gap:8px;
+}
+.user-area #btn-logout{
+	background:linear-gradient(90deg,#ffebe8,#ffd2cb);
+	border:1px solid #e25b4f;
+	color:#b1362b;
+	font-weight:700;
+}
+.user-area #btn-logout::before{
+	content:'⎋';
+	margin-right:6px;
+}
+.user-area #btn-login{
+	background:linear-gradient(90deg,#e6f3ff,#cfe8ff);
+	border:1px solid #5aa5e4;
+	color:#0b63a8;
+	font-weight:700;
+}
 main{padding:16px;max-width:1200px;margin:0 auto}
 .controls{display:flex;gap:8px;align-items:center;margin-bottom:12px}
 .controls input{flex:1;padding:10px;border-radius:8px;border:1px solid #e6f0fb}
