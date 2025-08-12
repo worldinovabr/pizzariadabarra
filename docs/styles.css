@@ -290,7 +290,46 @@ body {
 		.card img { height: 90px; max-width: 90px; border-radius: 10px; }
 		.cart { width: 94%; }
 	}
-}
+
+	/* Extra-small phones: refine layout at ≤400px */
+	@media (max-width: 400px) {
+		main { padding: 12px; }
+		.logo { width: 72px; height: 72px; }
+		.pedido-direto { font-size: 1rem; }
+		.topbar .carrinho-btn { padding: 8px 14px; font-size: 0.95rem; gap: 6px; }
+		.topbar .carrinho-btn svg { width: 22px; height: 22px; }
+
+		.table-banner { padding: 12px 14px; border-radius: 14px; }
+		.table-banner strong { font-size: 1.06rem; }
+		#table-number { font-size: 1.06rem; padding: 4px 8px; border-radius: 10px; }
+		.table-actions { flex-direction: column; width: 100%; gap: 8px; }
+		.table-actions .button, .table-actions button, .table-actions input[type="button"], .table-actions input[type="submit"] {
+			width: 100%; min-width: 0; padding: 12px 0; font-size: 1rem;
+		}
+
+		.filters { gap: 8px; margin: 12px 0; }
+		.filters input, .filters select { padding: 10px 12px; font-size: 0.98rem; }
+
+		.menu-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
+			.card { padding: 16px; border-radius: 20px; min-height: unset; }
+		.card img { width: 140px; height: 140px; border-radius: 16px; }
+		.card h3 { font-size: 1.28rem; margin-bottom: 10px; }
+		.card p { font-size: 1rem; margin-bottom: 10px; }
+		.card .price { font-size: 1.18rem; margin-bottom: 16px; }
+		.actions { gap: 10px; }
+		.card .actions > * { flex: 1 1 0; min-width: 0; padding: 12px 0; font-size: 0.98rem; }
+
+		/* Cart footer stacks: total on top, buttons row below */
+		.cart-footer { flex-direction: column; align-items: stretch; gap: 8px; }
+		.cart-footer .cart-opts { display: flex; gap: 8px; }
+		.cart-footer .cart-opts .button,
+		.cart-footer .cart-opts button,
+		.cart-footer .cart-opts input[type="submit"],
+		.cart-footer .cart-opts input[type="button"] {
+			flex: 1; min-width: 0; padding: 10px 0; font-size: 0.98rem; border-radius: 10px;
+		}
+	}
+
 .topbar {
 	background: linear-gradient(120deg,#ff7043 0%,#d84315 100%);
 	border-radius: 0 0 32px 32px;
