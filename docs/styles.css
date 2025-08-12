@@ -80,6 +80,84 @@ main{padding:20px;max-width:1100px;margin:0 auto}
 	.cart{width:98vw;right:2vw;bottom:2vw;}
 }
 @media (max-width:600px){
+  body {
+    padding: 0;
+    background: #f8fbff;
+  }
+  .topbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0;
+    gap: 8px;
+  }
+  .brand {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .logo {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 4px;
+  }
+  .user-area {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin: 0 0 12px 0;
+  }
+  #filter {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  #refresh, #auto {
+    margin-bottom: 8px;
+  }
+  #report-filters {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    margin-bottom: 16px;
+  }
+  #pizza-type-filter, #date-filter, #apply-report-filter {
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .reports-list, .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: stretch;
+    margin: 0 0 18px 0;
+  }
+  .order, .report-card {
+    width: 98vw;
+    max-width: 420px;
+    margin: 0 auto;
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(216,67,21,0.10);
+    padding: 18px 10px;
+    background: #fff;
+  }
+  .order .btns, .report-card .btns {
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
   .topbar{flex-direction:column;align-items:flex-start;padding:10px}
   .brand{gap:8px}
   .logo{width:56px;height:56px}
