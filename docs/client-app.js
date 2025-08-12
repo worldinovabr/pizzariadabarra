@@ -44,7 +44,7 @@ function renderCategories(){
 function filterAndRender(){
   const sel = q('#category-filter').value;
   const search = q('#search').value.trim().toLowerCase();
-  const list = menu.filter(m=> (sel==='all'||m.category===sel) && (m.name.toLowerCase().includes(search)||m.desc.toLowerCase().includes(search)));
+  const list = menu.filter(m=> (sel==='Todos'||m.category===sel) && (m.name.toLowerCase().includes(search)||m.desc.toLowerCase().includes(search)));
   renderMenu(list);
 }
 
