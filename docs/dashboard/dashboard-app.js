@@ -194,7 +194,12 @@ async function showSavedReports() {
 // Mostra/oculta relatório
 btnReport.addEventListener('click', ()=> {
   btnSavedReports.style.display = '';
-  showSavedReports();
+  reportsEl.style.display = '';
+  ordersEl.style.display = 'none';
+  reportFiltersEl.style.display = '';
+  if (lastReportData) {
+    renderFilteredReport(lastReportData, '', '');
+  }
 });
 
 async function loadReports() {
