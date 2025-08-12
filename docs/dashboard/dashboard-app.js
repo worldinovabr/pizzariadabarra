@@ -351,8 +351,8 @@ onAuthStateChanged(auth, user=>{
     q('#modal').setAttribute('aria-hidden','true');
     q('#btn-login').style.display='none';
     q('#btn-logout').style.display='inline-block';
-    btnReport.style.display = 'inline-block';
-    btnSavedReports.style.display = 'inline-block';
+    q('#btn-sales-report').style.display = 'inline-block';
+    q('#btn-orders').style.display = 'inline-block';
     q('#orders').style.display = '';
     q('#controls').style.display = '';
     reportsEl.style.display = 'none';
@@ -362,8 +362,8 @@ onAuthStateChanged(auth, user=>{
     q('#modal').setAttribute('aria-hidden','false');
     q('#btn-login').style.display='inline-block';
     q('#btn-logout').style.display='none';
-    btnReport.style.display = 'none';
-    btnSavedReports.style.display = 'none';
+    q('#btn-sales-report').style.display = 'none';
+    q('#btn-orders').style.display = 'none';
     q('#orders').style.display = 'none';
     q('#controls').style.display = 'none';
     reportsEl.style.display = 'none';
