@@ -239,4 +239,20 @@ main{padding:16px;max-width:1200px;margin:0 auto}
 .primary{background:var(--accent);color:white;border:none;padding:8px;border-radius:8px}
 .modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.4)}
 .modal[aria-hidden="true"]{display:none}
-.modal-content{background:white;padding:16px;border-radius:10px;width:320px}
+.modal-content{background:white;padding:24px;border-radius:18px;width:420px;max-width:92vw;box-shadow:0 18px 60px rgba(0,0,0,0.18)}
+
+/* Login modal polish */
+.login-modal{display:flex;flex-direction:column;gap:16px}
+.login-header{display:flex;flex-direction:column;gap:8px}
+.login-modal .logo{width:80px;height:80px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+.login-header h2{margin:6px 0 0 0;font-size:1.6rem;color:#222}
+.login-header h3{margin:6px 0 0 0;font-weight:700;color:#333}
+
+.login-fields{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.login-fields input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #e9eef6;background:#f9fbff;outline:none;transition:border-color .18s, box-shadow .18s}
+.login-fields input:focus{border-color:#0b63a8;box-shadow:0 0 0 3px rgba(11,99,168,0.15)}
+
+.login-actions{display:flex;gap:12px;margin-top:4px}
+.login-btn{min-width:120px;border-radius:12px}
+.cancel-btn{min-width:120px;border-radius:12px;background:linear-gradient(90deg,#fff7f2,#ffe0d3);border:1px solid #ff7043;color:#d84315;font-weight:700}
+.cancel-btn:hover{background:linear-gradient(90deg,#ffe0d3,#fff7f2);color:#ff7043}
