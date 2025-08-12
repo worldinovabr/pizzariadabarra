@@ -9,7 +9,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const menu = [
-  {id:1,name:"Margherita",desc:"Molho, mussarela e manjericão",price:29.9,category:"Tradicionais",img:"../assets/pizza1.png"},
+  {id:1,name:"Margherita",desc:"Molho, mussarela e manjericão",price:29.9,category:"Tradicionais",img:"../assets/pizza1.png"}, 
   {id:2,name:"Calabresa",desc:"Calabresa, cebola, azeitonas",price:34.9,category:"Tradicionais",img:"../assets/pizza2.png"},
   {id:3,name:"Quatro Queijos",desc:"Mussarela, provolone, gorgonzola, parmesão",price:39.9,category:"Especiais",img:"../assets/pizza3.png"},
   {id:4,name:"Pepperoni",desc:"Pepperoni picante",price:41.9,category:"Picantes",img:"../assets/pizza4.png"}
@@ -136,6 +136,21 @@ function setupHandlers(){
   q('#close-cart').addEventListener('click', ()=> q('#cart').setAttribute('aria-hidden','true'));
   q('#change-table').addEventListener('click', askTable);
   q('#confirm-order').addEventListener('click', confirmAndSend);
+  // Enable confirm only if cart and table are set
+  function updateConfirmBtn(){
+    const btn = q('#confirm-order');
+    btn.disabled = state.cart.length===0 || !state.table;
+  }
+  ['cart','table'].forEach(k=>{
+    Object.defineProperty(state, k, {
+      set(v){
+        this['_'+k]=v;
+        updateConfirmBtn();
+      },
+      get(){ return this['_'+k]; }
+    });
+  });
+  updateConfirmBtn();
   q('#print-order').addEventListener('click', ()=> {
     const cart = q('#cart');
     const original = document.body.innerHTML;
