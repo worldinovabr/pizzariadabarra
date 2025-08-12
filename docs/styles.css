@@ -3,7 +3,7 @@
 body{margin:0;font-family:'Inter',system-ui,Arial,sans-serif;background:var(--bg);color:#222;padding-bottom:80px;min-height:100vh;}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px;background:linear-gradient(90deg,var(--accent),#ff7043);color:white;box-shadow:var(--shadow);border-radius:0 0 var(--radius) var(--radius);}
 .brand{display:flex;gap:16px;align-items:center}
-.logo{width:64px;height:64px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.logo{width:96px;height:96px;border-radius:18px;box-shadow:0 4px 16px rgba(216,67,21,0.10)}
 main{padding:20px;max-width:1100px;margin:0 auto}
 .table-banner{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px}
 .table-actions{display:flex;gap:10px;flex-wrap:wrap}
@@ -75,14 +75,14 @@ main{padding:20px;max-width:1100px;margin:0 auto}
 @media (max-width:900px){
 	main{padding:10px}
 	.menu-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-	.logo{width:48px;height:48px}
+  .logo{width:72px;height:72px}
 	.card img{height:120px}
 	.cart{width:98vw;right:2vw;bottom:2vw;}
 }
 @media (max-width:600px){
   .topbar{flex-direction:column;align-items:flex-start;padding:10px}
   .brand{gap:8px}
-  .logo{width:40px;height:40px}
+  .logo{width:56px;height:56px}
   .table-banner{flex-direction:column;align-items:flex-start;padding:10px}
   .filters{flex-direction:column;gap:6px}
   .filters input, .filters select{
@@ -116,7 +116,7 @@ main{padding:20px;max-width:1100px;margin:0 auto}
 }
 @media (max-width:400px){
 	.topbar{padding:6px}
-	.logo{width:28px;height:28px}
+  .logo{width:40px;height:40px}
 	.card img{height:60px}
 	.cart{height:96vh;}
 }
