@@ -68,6 +68,7 @@ async function loadSalesReport() {
       });
       pedidosFinalizados.push({
         mesa: data.mesa,
+        numeroRegistro: data.numeroRegistro,
         criadoEm: created ? created.toLocaleString() : '-',
         itens: data.itens || [],
         total: (data.itens||[]).reduce((acc,i)=>acc+i.preco*i.qtd,0)
@@ -87,7 +88,7 @@ async function loadSalesReport() {
   if (pedidosFinalizados.length) {
     pedidosHtml = `<h4 style="margin-top:24px">Pedidos Finalizados</h4>` + pedidosFinalizados.map(p => `
       <div style="background:#fff6f0;padding:12px 18px;margin-bottom:12px;border-radius:12px;box-shadow:0 2px 8px rgba(216,67,21,0.06)">
-        <b>Mesa ${p.mesa}</b> <span style="color:#888">${p.criadoEm}</span><br>
+        ${p.numeroRegistro ? `<span class='badge-num' style="margin-right:8px">pedido= ${p.numeroRegistro}</span>` : ''}<b>Mesa ${p.mesa}</b> <span style="color:#888">${p.criadoEm}</span><br>
         <ul style="margin:8px 0 0 0;padding:0 0 0 18px;">
           ${p.itens.map(i=>`<li>${i.qtd}× ${i.nome} — R$ ${formatBRL(i.preco)}</li>`).join('')}
         </ul>

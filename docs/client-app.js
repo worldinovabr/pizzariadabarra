@@ -193,7 +193,7 @@ async function sendNow(){
       state.cart = [];
       saveState();
       updateCartUI();
-      showToast(`Pedido #${numeroRegistro} enviado — obrigado!`);
+  showToast(`pedido= ${numeroRegistro} enviado — obrigado!`);
     }else{
       queueOrder(pedido);
       state.cart = [];
