@@ -115,7 +115,7 @@ setTimeout(() => {
 }, 500);
 // dashboard-app.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getFirestore, collection, query, orderBy, onSnapshot, getDocs, updateDoc, doc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { getFirestore, collection, query, orderBy, onSnapshot, getDocs, updateDoc, doc, addDoc, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
 import { firebaseConfig } from "./firebaseConfig.js";
@@ -144,7 +144,8 @@ function renderOrders(docs){
       <div class="btns">
         <button data-action="prev">◀️</button>
         <button data-action="next">▶️</button>
-        <button data-action="delete">Excluir</button>
+        <button data-action="cancel" style="border:2px solid #ff7043;background:#fff;color:#d84315;border-radius:12px;padding:8px 16px">Cancelar</button>
+        <button data-action="delete" style="border:2px solid #e53935;background:#fff;color:#e53935;border-radius:12px;padding:8px 16px">Excluir</button>
         <button data-action="finalizar" class="primary" style="background:linear-gradient(90deg,#4caf50,#388e3c);color:#fff;margin-left:8px;">Finalizar</button>
       </div>
     </article>`;
@@ -157,6 +158,8 @@ function attachButtons(){
     const id = el.dataset.id;
     el.querySelector('[data-action="next"]').addEventListener('click', ()=> changeStatus(id, 'next'));
     el.querySelector('[data-action="prev"]').addEventListener('click', ()=> changeStatus(id, 'prev'));
+    const cancelBtn = el.querySelector('[data-action="cancel"]');
+    if(cancelBtn) cancelBtn.addEventListener('click', ()=> cancelOrder(id));
     el.querySelector('[data-action="delete"]').addEventListener('click', ()=> deleteOrder(id));
     el.querySelector('[data-action="finalizar"]').addEventListener('click', ()=> finalizeOrder(id));
   });
@@ -164,6 +167,11 @@ function attachButtons(){
 async function finalizeOrder(id){
   const ref = doc(db, 'pedidos', id);
   await updateDoc(ref, { status: 'entregue' });
+}
+
+async function cancelOrder(id){
+  const ref = doc(db, 'pedidos', id);
+  await updateDoc(ref, { status: 'cancelado' });
 }
 }
 
@@ -195,9 +203,9 @@ async function changeStatus(id, dir){
 }
 
 async function deleteOrder(id){
-  if(!confirm('Excluir pedido?')) return;
+  if(!confirm('Excluir permanentemente este pedido? Essa ação não pode ser desfeita.')) return;
   const ref = doc(db,'pedidos',id);
-  await updateDoc(ref, { status: 'cancelado' });
+  await deleteDoc(ref);
 }
 
 // handlers
