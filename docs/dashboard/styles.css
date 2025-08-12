@@ -234,13 +234,13 @@ main{padding:16px;max-width:1200px;margin:0 auto}
 .order h4{margin:0}
 .order h4 .badge-num{
 	display:inline-block;
-	margin-right:8px;
-	padding:3px 8px;
+	margin-right:10px;
+	padding:3px 10px;
 	border-radius:10px;
 	background:#eaf4ff;
 	color:#0b63a8;
 	font-weight:800;
-	font-size:0.95rem;
+	font-size:0.9rem;
 	box-shadow:0 2px 8px rgba(11,99,168,0.10);
 }
 .order .meta{font-size:13px;color:#666}

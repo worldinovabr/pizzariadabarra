@@ -137,8 +137,8 @@ function formatBRL(v){return v.toFixed(2).replace('.',',')}
 function renderOrders(docs){
   ordersEl.innerHTML = docs.map(d=>{
     const data = d.data();
-    return `<article class="order" data-id="${d.id}">
-  <h4>${data.numeroRegistro ? `<span class="badge-num">#${data.numeroRegistro}</span>` : ''} Mesa ${data.mesa} — <span class="meta">${data.status}</span></h4>
+      return `<article class="order" data-id="${d.id}">
+        <h4>${data.numeroRegistro ? `<span class="badge-num">pedido= ${data.numeroRegistro}</span>` : ''} Mesa ${data.mesa} — <span class="meta">${data.status}</span></h4>
       <div class="meta">Criado: ${data.criadoEm && data.criadoEm.toDate ? data.criadoEm.toDate().toLocaleString() : '-'}</div>
       <ul class="items">${(data.itens||[]).map(i=>`<li>${i.qtd}× ${i.nome} — R$ ${formatBRL(i.preco)}</li>`).join('')}</ul>
       <div class="btns">
