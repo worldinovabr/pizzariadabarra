@@ -32,13 +32,19 @@
 
   <!-- modal login -->
   <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <h3>Login - Recepção</h3>
-      <input id="email" placeholder="email" />
-      <input id="password" placeholder="senha" type="password" />
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button id="do-login" class="primary">Entrar</button>
-        <button id="close-modal">Cancelar</button>
+    <div class="modal-content login-modal">
+      <div class="login-header">
+        <img src="../assets/logo.png" alt="Logo" class="login-logo" />
+        <h2>Recepção</h2>
+        <h3>Bem-vindo! Faça login para acessar</h3>
+      </div>
+      <div class="login-fields">
+        <input id="email" placeholder="Email" autocomplete="username" />
+        <input id="password" placeholder="Senha" type="password" autocomplete="current-password" />
+      </div>
+      <div class="login-actions">
+        <button id="do-login" class="primary login-btn">Entrar</button>
+        <button id="close-modal" class="cancel-btn">Cancelar</button>
       </div>
     </div>
   </div>
