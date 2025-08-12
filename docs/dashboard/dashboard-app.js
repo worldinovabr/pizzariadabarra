@@ -148,14 +148,25 @@ function renderFilteredReport(reportData, pizzaType, date) {
   reportsEl.innerHTML = html;
 }
 const reportsEl = document.getElementById('reports');
-const btnReport = q('#btn-report');
-const btnSavedReports = document.createElement('button');
-btnSavedReports.textContent = 'Relatórios Salvos';
-btnSavedReports.style.marginRight = '12px';
-btnSavedReports.style.display = 'none';
-q('.user-area').insertBefore(btnSavedReports, btnReport);
+const btnSalesReport = q('#btn-sales-report');
+const btnOrders = q('#btn-orders');
 
-btnSavedReports.addEventListener('click', showSavedReports);
+// Função para mostrar relatório de vendas total
+btnSalesReport.addEventListener('click', () => {
+  reportsEl.style.display = '';
+  ordersEl.style.display = 'none';
+  reportFiltersEl.style.display = '';
+  if (lastReportData) {
+    renderFilteredReport(lastReportData, '', '');
+  }
+});
+
+// Função para mostrar pedidos
+btnOrders.addEventListener('click', () => {
+  ordersEl.style.display = '';
+  reportsEl.style.display = 'none';
+  reportFiltersEl.style.display = 'none';
+});
 
 async function showSavedReports() {
   // Busca relatórios salvos
