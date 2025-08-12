@@ -4,12 +4,12 @@
 }
 @media (min-width: 900px) {
 	.topbar {
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		padding: 24px 48px 18px 48px;
-		border-radius: 0 0 32px 32px;
-		gap: 0;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 14px 0 8px 0;
+			border-radius: 0 0 32px 32px;
+			gap: 0;
 	}
 	.brand {
 		flex-direction: row;
@@ -18,19 +18,19 @@
 		margin-bottom: 0;
 	}
 	.logo {
-		width: 80px;
-		height: 80px;
-		margin-bottom: 0;
+			width: 140px;
+			height: 140px;
+			margin-bottom: 0;
 	}
 	.dashboard-nav {
-		margin-left: 32px;
-		gap: 24px;
-		align-items: center;
+			margin-left: 0;
+			gap: 10px;
+			align-items: center;
 	}
 	.dashboard-btn {
-		padding: 14px 38px;
-		font-size: 1.12rem;
-		border-radius: 16px;
+			padding: 8px 18px;
+			font-size: 1rem;
+			border-radius: 12px;
 	}
 	main {
 		max-width: 1200px;
