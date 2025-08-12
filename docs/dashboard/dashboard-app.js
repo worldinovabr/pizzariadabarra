@@ -39,6 +39,8 @@ async function loadSalesReport() {
   let total = 0;
   let count = 0;
   let mesas = new Set();
+  let pedidosFinalizados = [];
+  let pizzaResumo = {};
   // Get date filter values
   const startDateEl = document.getElementById('report-date-start');
   const endDateEl = document.getElementById('report-date-end');
@@ -55,14 +57,47 @@ async function loadSalesReport() {
       mesas.add(data.mesa);
       (data.itens||[]).forEach(i => {
         total += (i.preco * i.qtd);
+        // Resumo por tipo de pizza
+        if (!pizzaResumo[i.nome]) pizzaResumo[i.nome] = { qtd: 0, valor: 0 };
+        pizzaResumo[i.nome].qtd += i.qtd;
+        pizzaResumo[i.nome].valor += i.preco * i.qtd;
+      });
+      pedidosFinalizados.push({
+        mesa: data.mesa,
+        criadoEm: created ? created.toLocaleString() : '-',
+        itens: data.itens || [],
+        total: (data.itens||[]).reduce((acc,i)=>acc+i.preco*i.qtd,0)
       });
     }
   });
+  let pizzaTable = '';
+  if (Object.keys(pizzaResumo).length) {
+    pizzaTable = `<table style="width:100%;margin:18px 0;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(216,67,21,0.06)">
+      <thead><tr><th style="text-align:left;padding:8px 12px;color:#d84315">Tipo de Pizza</th><th>Qtd</th><th>Valor</th></tr></thead>
+      <tbody>
+        ${Object.entries(pizzaResumo).map(([nome,info])=>`<tr><td style="padding:8px 12px">${nome}</td><td style="text-align:center">${info.qtd}</td><td style="text-align:right">R$ ${formatBRL(info.valor)}</td></tr>`).join('')}
+      </tbody>
+    </table>`;
+  }
+  let pedidosHtml = '';
+  if (pedidosFinalizados.length) {
+    pedidosHtml = `<h4 style="margin-top:24px">Pedidos Finalizados</h4>` + pedidosFinalizados.map(p => `
+      <div style="background:#fff6f0;padding:12px 18px;margin-bottom:12px;border-radius:12px;box-shadow:0 2px 8px rgba(216,67,21,0.06)">
+        <b>Mesa ${p.mesa}</b> <span style="color:#888">${p.criadoEm}</span><br>
+        <ul style="margin:8px 0 0 0;padding:0 0 0 18px;">
+          ${p.itens.map(i=>`<li>${i.qtd}× ${i.nome} — R$ ${formatBRL(i.preco)}</li>`).join('')}
+        </ul>
+        <div style="margin-top:8px;font-weight:700;color:#d84315">Total: R$ ${formatBRL(p.total)}</div>
+      </div>
+    `).join('');
+  }
   const html = `<div style="padding:18px 0">
     <h3>Resumo de Vendas</h3>
     <p><b>Pedidos entregues:</b> ${count}</p>
     <p><b>Mesas atendidas:</b> ${mesas.size}</p>
-    <p><b>Total vendido:</b> R$ ${formatBRL(total)}</p>
+    ${pizzaTable}
+    <p style="font-size:1.2rem;font-weight:700;color:#d84315;margin-top:18px">Valor total vendido: R$ ${formatBRL(total)}</p>
+    ${pedidosHtml}
   </div>`;
   document.getElementById('report-content').innerHTML = html;
 }
