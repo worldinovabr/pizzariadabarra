@@ -96,22 +96,64 @@ filterInput.addEventListener('input', ()=> {
 });
 
 // login modal
+
 const modal = q('#modal');
-q('#btn-login').addEventListener('click', ()=> { modal.setAttribute('aria-hidden','false'); });
-q('#close-modal').addEventListener('click', ()=> modal.setAttribute('aria-hidden','true'));
+q('#btn-login').addEventListener('click', ()=> {
+  modal.setAttribute('aria-hidden','false');
+  q('#email').focus();
+});
+q('#close-modal').addEventListener('click', ()=> {
+  modal.setAttribute('aria-hidden','true');
+  q('#email').value = '';
+  q('#password').value = '';
+});
 q('#do-login').addEventListener('click', async ()=>{
-  const email = q('#email').value;
-  const password = q('#password').value;
+  const email = q('#email').value.trim();
+  const password = q('#password').value.trim();
+  if(!email || !password){
+    alert('Preencha email e senha.');
+    return;
+  }
   try{
     await signInWithEmailAndPassword(auth, email, password);
     modal.setAttribute('aria-hidden','true');
-  }catch(e){ alert('Erro login: '+e.message); }
+    q('#email').value = '';
+    q('#password').value = '';
+  }catch(e){
+    if(e.code === 'auth/user-not-found'){
+      alert('Usuário não encontrado. Solicite cadastro ao administrador.');
+    }else if(e.code === 'auth/wrong-password'){
+      alert('Senha incorreta.');
+    }else{
+      alert('Erro login: '+e.message);
+    }
+  }
 });
-q('#btn-logout').addEventListener('click', ()=> signOut(auth));
+q('#btn-logout').addEventListener('click', ()=> {
+  signOut(auth);
+  modal.setAttribute('aria-hidden','true');
+  q('#email').value = '';
+  q('#password').value = '';
+});
 
 onAuthStateChanged(auth, user=>{
-  if(user){ q('#btn-login').style.display='none'; q('#btn-logout').style.display='inline-block'; listenRealtime(); }
-  else { q('#btn-login').style.display='inline-block'; q('#btn-logout').style.display='none'; }
+  if(user){
+    q('#btn-login').style.display='none';
+    q('#btn-logout').style.display='inline-block';
+    q('#modal').setAttribute('aria-hidden','true');
+    document.querySelector('.controls').style.display = '';
+    document.querySelector('#orders').style.display = '';
+    listenRealtime();
+  }else{
+    q('#btn-login').style.display='inline-block';
+    q('#btn-logout').style.display='none';
+    q('#modal').setAttribute('aria-hidden','false');
+    document.querySelector('.controls').style.display = 'none';
+    document.querySelector('#orders').style.display = 'none';
+    // Limpa campos do modal
+    q('#email').value = '';
+    q('#password').value = '';
+  }
 });
 
 // start
@@ -125,7 +167,7 @@ const messaging = getMessaging(app);
 
 async function registerKitchenToken() {
   try {
-    const currentToken = await getToken(messaging, { vapidKey: "SUA_VAPID_KEY" });
+    const currentToken = await getToken(messaging, { vapidKey: "AIzaSyAM6eaqF763bjoeXQV5kECkzed9ZqkLiLs" });
     if (currentToken) {
       console.log("FCM Token:", currentToken);
       // Save token to Firestore
