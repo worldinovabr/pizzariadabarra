@@ -526,3 +526,114 @@ body {
 	.card img { height: 90px; max-width: 90px; border-radius: 10px; }
 	.cart { width: 94%; }
 }
+
+/* ---------- Cart UI improvements (scoped) ---------- */
+/* Header close button: small, clean */
+.cart header button {
+	background: transparent;
+	color: #9a9a9a;
+	border: none;
+	min-width: auto;
+	padding: 6px 10px;
+	font-size: 18px;
+	line-height: 1;
+	border-radius: 8px;
+}
+.cart header button:hover {
+	background: #fff2ec;
+	color: var(--accent);
+}
+
+/* Cart items: keep image, name and controls tidy */
+.cart-item {
+	align-items: flex-start;
+}
+.cart-item strong {
+	display: block;
+	max-width: 220px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* Right column (qty controls + line total) */
+.cart-item > :last-child {
+	margin-left: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	align-items: flex-end;
+}
+
+/* Compact +/- buttons inside cart; do not inherit global button style */
+.cart .cart-item button {
+	min-width: 0;
+	padding: 8px 10px;
+	font-size: 16px;
+	font-weight: 700;
+	border-radius: 10px;
+	border: 1px solid #ffd6c9;
+	background: #fff;
+	color: var(--accent);
+	box-shadow: none;
+	cursor: pointer;
+}
+.cart .cart-item button:hover {
+	background: #fff6f2;
+}
+
+/* Square +/- buttons */
+.cart .cart-item [data-action="dec"],
+.cart .cart-item [data-action="inc"] {
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Remove as subtle text button */
+.cart .cart-item [data-action="remove"] {
+	border: none;
+	background: transparent;
+	color: #c0392b;
+	font-weight: 600;
+	padding: 4px 6px;
+	text-decoration: underline;
+}
+.cart .cart-item [data-action="remove"]:hover {
+	background: #fff2f0;
+}
+
+/* Footer with total and actions always visible */
+.cart-footer {
+	border-top: 1px solid #f3f3f3;
+	padding: 14px 18px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	position: sticky;
+	bottom: 0;
+	background: var(--card);
+}
+.cart-footer .total {
+	font-weight: 800;
+	font-size: 1.06rem;
+}
+.cart-footer .cart-opts {
+	display: flex;
+	gap: 12px;
+}
+
+/* Keep primary action prominent; inherits global button visuals */
+.cart-footer .cart-opts button.primary {
+	min-width: 160px;
+}
+
+/* Better small-screen spacing inside cart */
+@media (max-width: 600px) {
+	.cart-item strong { max-width: 150px; }
+	.cart-footer { padding: 12px; }
+}
