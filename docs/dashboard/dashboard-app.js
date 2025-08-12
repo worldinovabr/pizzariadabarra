@@ -1,3 +1,79 @@
+// Navigation buttons logic
+const btnPedidos = document.getElementById('btn-pedidos');
+const btnRelatorio = document.getElementById('btn-relatorio');
+
+// Create a section for sales report if not present
+let reportSection = document.getElementById('sales-report');
+if (!reportSection) {
+  reportSection = document.createElement('section');
+  reportSection.id = 'sales-report';
+  reportSection.style.display = 'none';
+  reportSection.innerHTML = `
+    <h2>Relatório de Vendas</h2>
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:18px">
+      <label>De: <input type="date" id="report-date-start"></label>
+      <label>Até: <input type="date" id="report-date-end"></label>
+      <button id="btn-filtrar-relatorio" class="dashboard-btn">Filtrar</button>
+    </div>
+    <div id="report-content">Selecione para visualizar o relatório.</div>
+  `;
+  document.querySelector('main').appendChild(reportSection);
+}
+
+btnPedidos.addEventListener('click', () => {
+  document.getElementById('orders').style.display = '';
+  document.querySelector('.controls').style.display = '';
+  reportSection.style.display = 'none';
+});
+
+btnRelatorio.addEventListener('click', () => {
+  document.getElementById('orders').style.display = 'none';
+  document.querySelector('.controls').style.display = 'none';
+  reportSection.style.display = '';
+  loadSalesReport();
+});
+
+async function loadSalesReport() {
+  const qref = query(collection(db,'pedidos'), orderBy('criadoEm','desc'));
+  const snap = await getDocs(qref);
+  let total = 0;
+  let count = 0;
+  let mesas = new Set();
+  // Get date filter values
+  const startDateEl = document.getElementById('report-date-start');
+  const endDateEl = document.getElementById('report-date-end');
+  let startDate = startDateEl && startDateEl.value ? new Date(startDateEl.value) : null;
+  let endDate = endDateEl && endDateEl.value ? new Date(endDateEl.value) : null;
+  if (endDate) endDate.setHours(23,59,59,999);
+  snap.docs.forEach(d => {
+    const data = d.data();
+    if(data.status === 'entregue') {
+      const created = data.criadoEm && data.criadoEm.toDate ? data.criadoEm.toDate() : null;
+      if (created && startDate && created < startDate) return;
+      if (created && endDate && created > endDate) return;
+      count++;
+      mesas.add(data.mesa);
+      (data.itens||[]).forEach(i => {
+        total += (i.preco * i.qtd);
+      });
+    }
+  });
+  const html = `<div style="padding:18px 0">
+    <h3>Resumo de Vendas</h3>
+    <p><b>Pedidos entregues:</b> ${count}</p>
+    <p><b>Mesas atendidas:</b> ${mesas.size}</p>
+    <p><b>Total vendido:</b> R$ ${formatBRL(total)}</p>
+  </div>`;
+  document.getElementById('report-content').innerHTML = html;
+}
+
+// Add filter button event
+setTimeout(() => {
+  const btnFiltrar = document.getElementById('btn-filtrar-relatorio');
+  if (btnFiltrar) {
+    btnFiltrar.onclick = () => loadSalesReport();
+  }
+}, 500);
 // dashboard-app.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getFirestore, collection, query, orderBy, onSnapshot, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
