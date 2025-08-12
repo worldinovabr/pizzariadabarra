@@ -9,37 +9,37 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <img src="../assets/logo.png" class="logo" alt="Pizzaria da Barra"/>
-      <h1>Dashboard - Recepção</h1>
-    </div>
-    <div class="user-area" id="user-area">
-  <button id="btn-sales-report" class="button" style="margin-right:12px;display:none;">Relatório de Vendas Total</button>
-  <button id="btn-orders" class="button" style="margin-right:12px;display:none;">Pedidos</button>
-  <button id="btn-login" class="button">Entrar</button>
-  <button id="btn-logout" class="button">Sair</button>
+  <header class="dashboard-topbar">
+    <img src="../assets/logo.png" class="dashboard-logo" alt="Pizzaria da Barra"/>
+    <h1 class="dashboard-title">Dashboard Admin</h1>
+    <div class="dashboard-user-area" id="user-area">
+      <button id="btn-orders" class="dashboard-btn" style="display:none;">Pedidos</button>
+      <button id="btn-sales-report" class="dashboard-btn" style="display:none;">Relatório de Vendas</button>
+      <button id="btn-login" class="dashboard-btn">Entrar</button>
+      <button id="btn-logout" class="dashboard-btn" style="display:none;">Sair</button>
     </div>
   </header>
 
   <main>
-    <section class="controls">
-      <input id="filter" placeholder="Filtrar por mesa ou status" />
-      <button id="refresh">Atualizar</button>
-      <label><input type="checkbox" id="auto"> Atualização em tempo real</label>
+    <section class="dashboard-controls" id="controls" style="display:none;">
+      <div class="dashboard-controls-row">
+        <input id="filter" class="dashboard-filter" placeholder="Filtrar por mesa ou status" />
+        <button id="refresh" class="dashboard-refresh">Atualizar</button>
+      </div>
+      <label class="dashboard-checkbox-label"><input type="checkbox" id="auto" style="margin-right:8px;"> Atualização em tempo real</label>
     </section>
 
     <!-- Filtros para relatórios -->
-    <section id="report-filters" style="display:none; margin-bottom:18px; gap:16px; align-items:center;">
-      <select id="pizza-type-filter" style="padding:8px 12px; border-radius:8px;">
+    <section id="report-filters" class="dashboard-report-filters" style="display:none;">
+      <select id="pizza-type-filter" class="dashboard-report-select">
         <option value="">Todas as pizzas</option>
       </select>
-      <input id="date-filter" type="date" style="padding:8px 12px; border-radius:8px;" />
-      <button id="apply-report-filter" style="padding:8px 18px; border-radius:8px; background:#d84315; color:#fff; border:none;">Filtrar</button>
+      <input id="date-filter" type="date" class="dashboard-report-date" />
+      <button id="apply-report-filter" class="dashboard-report-apply">Filtrar</button>
     </section>
 
-    <section id="reports" class="reports-list" style="display:none;margin-bottom:32px"></section>
-    <section id="orders" class="orders-list"></section>
+  <section id="reports" class="dashboard-reports-list" style="display:none;"></section>
+  <section id="orders" class="dashboard-orders-list"></section>
   </main>
 
   <!-- modal login -->
