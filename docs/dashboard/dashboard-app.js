@@ -141,6 +141,7 @@ function renderOrders(docs){
         <button data-action="prev">◀️</button>
         <button data-action="next">▶️</button>
         <button data-action="delete">Excluir</button>
+        <button data-action="finalizar" class="primary" style="background:linear-gradient(90deg,#4caf50,#388e3c);color:#fff;margin-left:8px;">Finalizar</button>
       </div>
     </article>`;
   }).join('');
@@ -153,7 +154,13 @@ function attachButtons(){
     el.querySelector('[data-action="next"]').addEventListener('click', ()=> changeStatus(id, 'next'));
     el.querySelector('[data-action="prev"]').addEventListener('click', ()=> changeStatus(id, 'prev'));
     el.querySelector('[data-action="delete"]').addEventListener('click', ()=> deleteOrder(id));
+    el.querySelector('[data-action="finalizar"]').addEventListener('click', ()=> finalizeOrder(id));
   });
+
+async function finalizeOrder(id){
+  const ref = doc(db, 'pedidos', id);
+  await updateDoc(ref, { status: 'entregue' });
+}
 }
 
 async function loadOnce(){
